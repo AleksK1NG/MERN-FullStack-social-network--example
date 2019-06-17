@@ -24,17 +24,16 @@ const UserSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now }
 })
 
-const User = mongoose.model('User', UserSchema)
-
 UserSchema.methods.toAuthJSON = function() {
   return {
     _id: this._id,
     avatar: this.avatar,
     name: this.name,
     info: this.info,
-    email: this.email,
+    email: this.email
     // token: this.generateJWT()
   }
 }
+const User = mongoose.model('User', UserSchema)
 
 module.exports = User
