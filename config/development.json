@@ -1,0 +1,6 @@
+{
+  "name": "My BLog Development",
+  "appPassword": "APP_PASSWORD",
+  "mongoURI": "mongodb://Alex:Alexpro1a@ds157256.mlab.com:57256/alex-pro--blog",
+  "JWT_SECRET": "my-superuserjwt-secreeet"
+}
