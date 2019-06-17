@@ -1,8 +1,19 @@
 const express = require('express')
 const router = express.Router()
 const UserController = require('../../controllers/usersController')
+const { check } = require('express-validator/check')
 
-// @ GET Public api/v1/users
-router.get('/', UserController.handlerName)
+// @ POST Public api/v1/users
+router.post(
+  '/register',
+  [
+    check('name', 'Name is required')
+      .not()
+      .isEmpty(),
+    check('email', 'Please enter valid email').isEmail(),
+    check('password', 'Please enter password with 6 or more length').isLength({ min: 6 })
+  ],
+  UserController.register
+)
 
 module.exports = router
