@@ -30,8 +30,8 @@ UserSchema.methods.toAuthJSON = function() {
     avatar: this.avatar,
     name: this.name,
     info: this.info,
-    email: this.email
-    // token: this.generateJWT()
+    email: this.email,
+    token: this.token
   }
 }
 const User = mongoose.model('User', UserSchema)

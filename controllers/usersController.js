@@ -2,6 +2,8 @@ const User = require('../models/User')
 const { validationResult } = require('express-validator/check')
 const gravatar = require('gravatar')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const config = require('config')
 
 module.exports.register = async (req, res) => {
   const { email, name, password, info } = req.body
@@ -20,10 +22,27 @@ module.exports.register = async (req, res) => {
     // create hashed password
     const salt = await bcrypt.genSalt(10)
     user.password = await bcrypt.hash(password, salt)
+    const payload = { user: { id: user.id } }
+
     // save user in db
     await user.save()
-    console.log('Saved user => ', user)
-    res.status(201).json(user.toAuthJSON())
+
+    await jwt.sign(payload, config.get('JWT_SECRET'), { expiresIn: 360000 }, (error, token) => {
+      if (error) throw error
+      user.token = token
+      console.log('token => ', token)
+      res.status(201).json(user.toAuthJSON())
+    })
+
+    // res.status(201).json(user.toAuthJSON())
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Server Error')
+  }
+}
+
+module.exports.login = async (req, res) => {
+  try {
   } catch (error) {
     console.error(error)
     res.status(500).send('Server Error')

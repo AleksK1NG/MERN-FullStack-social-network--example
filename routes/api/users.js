@@ -16,4 +16,10 @@ router.post(
   UserController.register
 )
 
+// @ POST Public api/v1/users
+router.post('/login',[
+  check('email', 'Please enter valid email').isEmail(),
+  check('password', 'Please enter password with 6 or more length').isLength({ min: 6 })
+], UserController.login)
+
 module.exports = router
