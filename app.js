@@ -22,7 +22,6 @@ app.use(express.json())
 // Routes
 app.use('/api/v1/posts', require('./routes/api/posts'))
 app.use('/api/v1/auth', require('./routes/api/auth'))
-app.use('/api/v1/users', require('./routes/api/users'))
 app.use('/api/v1/profile', require('./routes/api/profile'))
 
 // PORT
