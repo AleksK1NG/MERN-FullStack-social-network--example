@@ -46,4 +46,8 @@ router.patch(
   ProfilesController.updateUserProfile
 )
 
+
+// @ DELETE Private Delete profile, user & posts
+router.delete('/', authMiddleware,  ProfilesController.deleteUserProfile)
+
 module.exports = router
