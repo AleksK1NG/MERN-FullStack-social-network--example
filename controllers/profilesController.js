@@ -152,11 +152,14 @@ module.exports.getProfileByUserId = async (req, res) => {
   const userId = req.params.id
   try {
     const profile = await Profile.findOne({ user: userId })
-    if (!profile) return res.status(400).json({ errors: [{ msg: 'Profile does nit found' }] })
+    if (!profile) return res.status(400).json({ errors: [{ msg: 'Profile does not found' }] })
 
     res.status(200).json(profile)
   } catch (error) {
-    console.error(error)
+    console.error(error.message)
+    if (error.kind === 'ObjectId') {
+      return res.status(400).json({ errors: [{ msg: 'Profile does not found' }] })
+    }
     res.status(500).send('Server Error')
   }
 }
