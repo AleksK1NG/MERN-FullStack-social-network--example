@@ -140,8 +140,21 @@ module.exports.updateUserProfile = async (req, res) => {
 module.exports.getAllUsersProfiles = async (req, res) => {
   try {
     const profiles = await Profile.find().populate('user', ['name', 'avatar', 'email'])
-    console.log('GET ALL PROFILES => ', profiles)
+
     res.status(200).json(profiles)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Server Error')
+  }
+}
+
+module.exports.getProfileByUserId = async (req, res) => {
+  const userId = req.params.id
+  try {
+    const profile = await Profile.findOne({ user: userId })
+    if (!profile) return res.status(400).json({ errors: [{ msg: 'Profile does nit found' }] })
+
+    res.status(200).json(profile)
   } catch (error) {
     console.error(error)
     res.status(500).send('Server Error')
