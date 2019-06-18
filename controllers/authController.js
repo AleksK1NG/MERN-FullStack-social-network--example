@@ -1,5 +1,10 @@
 const User = require('../models/User')
+const { validationResult } = require('express-validator/check')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const config = require('config')
 
+// @GET Public load user
 module.exports.loadUser = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password')
@@ -7,6 +12,36 @@ module.exports.loadUser = async (req, res) => {
     res.json(user)
   } catch (error) {
     console.error(error.message)
+    res.status(500).send('Server Error')
+  }
+}
+
+// @POST Public load user and get token
+module.exports.authAndGetToken = async (req, res) => {
+  const { email, password } = req.body
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
+  try {
+    // check user exists
+    let user = await User.findOne({ email })
+    if (!user) return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] })
+
+    // compare password with db user password
+    const isMatch = await bcrypt.compare(password, user.password)
+    if (!isMatch) return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] })
+
+    const payload = { user: { id: user.id } }
+
+    // Add token to user
+    await jwt.sign(payload, config.get('JWT_SECRET'), { expiresIn: 360000 }, (error, token) => {
+      if (error) throw error
+      user.token = token
+      res.status(201).json(user.toAuthJSON())
+    })
+  } catch (error) {
+    console.error(error)
     res.status(500).send('Server Error')
   }
 }
