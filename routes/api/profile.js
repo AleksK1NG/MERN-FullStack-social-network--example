@@ -13,6 +13,9 @@ router.get('/', ProfilesController.getAllUsersProfiles)
 // @ GET Public api/v1/profile Get All Profiles
 router.get('/user/:id', ProfilesController.getProfileByUserId)
 
+// @ GET Public GitHub repos
+router.get('/github/:username', ProfilesController.getGitHubRepos)
+
 // @ POST Private api/v1/profile Create
 router.post(
   '/',
@@ -48,7 +51,24 @@ router.patch(
 )
 
 // @ PUT Add experience
-router.put('/experience', authMiddleware, ProfilesController.addExperience)
+router.put(
+  '/experience',
+  [
+    authMiddleware,
+    [
+      check('title', 'Title is required')
+        .not()
+        .isEmpty(),
+      check('company', 'Company is required')
+        .not()
+        .isEmpty(),
+      check('from', 'From date is required')
+        .not()
+        .isEmpty()
+    ]
+  ],
+  ProfilesController.addExperience
+)
 
 // @ PUT Add education
 router.put(

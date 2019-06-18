@@ -2,5 +2,6 @@
   "name": "MERN",
   "appPassword": "APP_PASSWORD",
   "mongoURI": "mongodb://alex:alexpro777@ds151169.mlab.com:51169/dev_connect",
-  "JWT_SECRET": "my-superuserjwt-secreeet"
+  "JWT_SECRET": "my-superuserjwt-secreeet",
+  "githubClientId": "9cb8c092154a3145215a"
 }
