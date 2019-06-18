@@ -46,7 +46,31 @@ router.patch(
   ProfilesController.updateUserProfile
 )
 
+// @ PUT Add experience
 router.put('/experience', authMiddleware, ProfilesController.addExperience)
+
+// @ PUT Add education
+router.put(
+  '/education',
+  [
+    authMiddleware,
+    [
+      check('school', 'School is required')
+        .not()
+        .isEmpty(),
+      check('degree', 'Degree is required')
+        .not()
+        .isEmpty(),
+      check('fieldofstudy', 'Field of study is required')
+        .not()
+        .isEmpty(),
+      check('from', 'From date is required')
+        .not()
+        .isEmpty()
+    ]
+  ],
+  ProfilesController.addEducation
+)
 
 // @ DELETE Private Delete profile, user & posts
 router.delete(
@@ -67,5 +91,8 @@ router.delete(
   ],
   ProfilesController.deleteUserProfile
 )
+
+// @ DELETE Private Delete experience
+router.delete('/experience/:exp_id', authMiddleware, ProfilesController.deleteExperience)
 
 module.exports = router

@@ -182,6 +182,7 @@ module.exports.deleteUserProfile = async (req, res) => {
   }
 }
 
+// @ PUT Add User Experience
 module.exports.addExperience = async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -209,6 +210,57 @@ module.exports.addExperience = async (req, res) => {
     res.json(profile)
   } catch (error) {
     console.error(error)
+    res.status(500).send('Server Error')
+  }
+}
+
+module.exports.addEducation = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
+
+  const { school, degree, fieldofstudy, from, to, current, description } = req.body
+
+  const newEdu = {
+    school,
+    degree,
+    fieldofstudy,
+    from,
+    to,
+    current,
+    description
+  }
+  try {
+    const profile = await Profile.findOne({ user: req.user.id })
+
+    profile.education.unshift(newEdu)
+
+    await profile.save()
+
+    res.json(profile)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Server Error')
+  }
+}
+
+// @ DELETE User Experience
+module.exports.deleteExperience = async (req, res) => {
+  const expId = req.params.exp_id
+  try {
+    const profile = await Profile.findOne({ user: req.user.id })
+
+    // Get remove index
+    const removeIndex = profile.experience.map((item) => item.id).indexOf(expId)
+
+    profile.experience.splice(removeIndex, 1)
+
+    await profile.save()
+
+    res.json(profile)
+  } catch (error) {
+    console.error(error.message)
     res.status(500).send('Server Error')
   }
 }
