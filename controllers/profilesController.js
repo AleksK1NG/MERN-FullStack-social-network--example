@@ -136,3 +136,14 @@ module.exports.updateUserProfile = async (req, res) => {
     res.status(500).send('Server Error')
   }
 }
+
+module.exports.getAllUsersProfiles = async (req, res) => {
+  try {
+    const profiles = await Profile.find().populate('user', ['name', 'avatar', 'email'])
+    console.log('GET ALL PROFILES => ', profiles)
+    res.status(200).json(profiles)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Server Error')
+  }
+}

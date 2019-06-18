@@ -7,6 +7,9 @@ const { check } = require('express-validator/check')
 // @ GET Private api/v1/profile Get Current user profile
 router.get('/me', authMiddleware, ProfilesController.getCurrentUserProfile)
 
+// @ GET Public api/v1/profile Get All Profiles
+router.get('/', ProfilesController.getAllUsersProfiles)
+
 // @ POST Private api/v1/profile Create or Update user profile
 router.post(
   '/',
