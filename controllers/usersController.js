@@ -27,14 +27,13 @@ module.exports.register = async (req, res) => {
     // save user in db
     await user.save()
 
+    // Add token to user
     await jwt.sign(payload, config.get('JWT_SECRET'), { expiresIn: 360000 }, (error, token) => {
       if (error) throw error
       user.token = token
-      console.log('token => ', token)
       res.status(201).json(user.toAuthJSON())
     })
 
-    // res.status(201).json(user.toAuthJSON())
   } catch (error) {
     console.error(error)
     res.status(500).send('Server Error')
