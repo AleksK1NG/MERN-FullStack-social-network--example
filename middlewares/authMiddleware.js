@@ -15,6 +15,7 @@ module.exports = function(req, res, next) {
 
     // add decoded user from token to req body
     req.user = decoded.user
+    console.log('from auth middleware => ', decoded)
     next()
   } catch (error) {
     console.error(error)
