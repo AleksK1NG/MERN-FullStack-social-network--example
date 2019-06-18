@@ -4,7 +4,7 @@ const authMiddleware = require('../../middlewares/authMiddleware')
 const PostsController = require('../../controllers/postsController')
 const { check } = require('express-validator/check')
 
-// @ GET Public api/v1/posts
+// @ POST Private create post
 router.post(
   '/',
   [
@@ -15,5 +15,8 @@ router.post(
   ],
   PostsController.createPost
 )
+
+// @ GET Public get all posts
+router.get('/', PostsController.getAllPosts)
 
 module.exports = router
