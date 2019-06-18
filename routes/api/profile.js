@@ -9,6 +9,7 @@ router.get('/me', authMiddleware, ProfilesController.getCurrentUserProfile)
 
 // @ GET Public api/v1/profile Get All Profiles
 router.get('/', ProfilesController.getAllUsersProfiles)
+
 // @ GET Public api/v1/profile Get All Profiles
 router.get('/user/:id', ProfilesController.getProfileByUserId)
 
@@ -94,5 +95,8 @@ router.delete(
 
 // @ DELETE Private Delete experience
 router.delete('/experience/:exp_id', authMiddleware, ProfilesController.deleteExperience)
+
+// @ DELETE Private Delete education
+router.delete('/education/:edu_id', authMiddleware, ProfilesController.deleteEducation)
 
 module.exports = router

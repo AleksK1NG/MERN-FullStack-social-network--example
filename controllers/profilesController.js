@@ -213,7 +213,7 @@ module.exports.addExperience = async (req, res) => {
     res.status(500).send('Server Error')
   }
 }
-
+// @ PUT Add User Education
 module.exports.addEducation = async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -255,6 +255,24 @@ module.exports.deleteExperience = async (req, res) => {
     const removeIndex = profile.experience.map((item) => item.id).indexOf(expId)
 
     profile.experience.splice(removeIndex, 1)
+
+    await profile.save()
+
+    res.json(profile)
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send('Server Error')
+  }
+}
+
+module.exports.deleteEducation = async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id })
+
+    // Get remove index
+    const removeIndex = profile.education.map((item) => item.id).indexOf(req.params.edu_id)
+
+    profile.education.splice(removeIndex, 1)
 
     await profile.save()
 
