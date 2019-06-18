@@ -22,4 +22,8 @@ router.get('/', PostsController.getAllPosts)
 // @ GET Public get post by id
 router.get('/:id', PostsController.getPostById)
 
+
+// @ DELETE Private delete post
+router.delete('/:id', authMiddleware, PostsController.deletePost)
+
 module.exports = router
