@@ -19,4 +19,7 @@ router.post(
 // @ GET Public get all posts
 router.get('/', PostsController.getAllPosts)
 
+// @ GET Public get post by id
+router.get('/:id', PostsController.getPostById)
+
 module.exports = router

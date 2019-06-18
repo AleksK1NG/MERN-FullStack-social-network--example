@@ -34,8 +34,24 @@ module.exports.createPost = async (req, res) => {
 // @ GET Get all posts
 module.exports.getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find().sort({ date: -1 });
-    res.json(posts);
+    const posts = await Post.find().sort({ date: -1 })
+    res.json(posts)
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send('Server Error')
+  }
+}
+
+// @ GET Get post by id
+module.exports.getPostById = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id)
+
+    if (!post) {
+      return res.status(404).json({ msg: 'Post not found' })
+    }
+
+    res.json(post)
   } catch (error) {
     console.error(error.message)
     res.status(500).send('Server Error')
