@@ -10,10 +10,8 @@ import Spinner from './components/Shared/Spinner/Spinner'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
 import Navbar from './components/Layout/Navbar/Navbar'
 
-const HomePage = React.lazy(() => import('./pages/HomePage/HomePage'))
 const LandingPage = React.lazy(() => import('./pages/LandingPage/LandingPage'))
-const LoginPage = React.lazy(() => import('./pages/LoginPage/LoginPage'))
-const RegisterPage = React.lazy(() => import('./pages/RegisterPage/RegisterPage'))
+const Routes = React.lazy(() => import('./routes/routes'))
 
 const App = ({ loadUser }) => {
   useEffect(() => {
@@ -26,14 +24,10 @@ const App = ({ loadUser }) => {
         <ErrorBoundary>
           <Fragment>
             <Navbar />
-            <Route exact path="/" component={LandingPage} />
-            <section className="container">
-              <Switch>
-                <Route exact path="/home" component={HomePage} />
-                <Route exact path="/login" component={LoginPage} />
-                <Route exact path="/register" component={RegisterPage} />
-              </Switch>
-            </section>
+            <Switch>
+              <Route exact path="/" component={LandingPage} />
+              <Route component={Routes} />
+            </Switch>
           </Fragment>
         </ErrorBoundary>
         <ToastContainer position={toast.POSITION.TOP_CENTER} />
