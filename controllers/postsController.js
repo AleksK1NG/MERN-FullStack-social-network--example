@@ -9,9 +9,7 @@ const request = require('request')
 module.exports.createPost = async (req, res) => {
   try {
     const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() })
-    }
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() })
 
     const user = await User.findById(req.user.id).select('-password')
 
@@ -47,9 +45,7 @@ module.exports.getPostById = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
 
-    if (!post) {
-      return res.status(404).json({ msg: 'Post not found' })
-    }
+    if (!post) return res.status(404).json({ msg: 'Post not found' })
 
     res.json(post)
   } catch (error) {
@@ -66,9 +62,7 @@ module.exports.deletePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
 
-    if (!post) {
-      return res.status(404).json({ msg: 'Post not found' })
-    }
+    if (!post) return res.status(404).json({ msg: 'Post not found' })
 
     // Check user is creator of post, toString() to convert object type
     if (post.user.toString() !== req.user.id) {
@@ -90,7 +84,6 @@ module.exports.deletePost = async (req, res) => {
 
 // @ PUT Like post
 module.exports.likePost = async (req, res) => {
-  console.log('like post => ', req.params.id)
   try {
     const post = await Post.findById(req.params.id)
 
@@ -131,6 +124,63 @@ module.exports.unLikePost = async (req, res) => {
     await post.save()
 
     res.status(201).json(post.likes)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Server Error')
+  }
+}
+
+// @ POST Add comment to the post
+module.exports.addCommentToPost = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() })
+
+  try {
+    const user = await User.findById(req.user.id).select('-password')
+    const post = await Post.findById(req.params.id)
+
+    const newComment = {
+      text: req.body.text,
+      name: user.name,
+      avatar: user.avatar,
+      user: req.user.id
+    }
+
+    post.comments.unshift(newComment)
+
+    await post.save()
+
+    res.status(201).json(post.comments)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Server Error')
+  }
+}
+
+// @ DELETE Delete comment from post
+module.exports.deleteCommentFromPost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id)
+
+    // Get comment by index
+    const comment = post.comments.find((comment) => comment.id === req.params.comment_id)
+
+    // Check comment exists or not
+    if (!comment) return res.status(404).json({ msg: 'Comment does not exist' })
+
+    // Check user is comment creator
+    if (comment.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'User not authorized' })
+    }
+
+    // Get index to delete
+    const removeIndex = post.comments.map((comment) => comment.id).indexOf(req.params.comment_id)
+
+    post.comments.splice(removeIndex, 1)
+
+    await post.save()
+
+    res.json(post.comments)
   } catch (error) {
     console.error(error)
     res.status(500).send('Server Error')

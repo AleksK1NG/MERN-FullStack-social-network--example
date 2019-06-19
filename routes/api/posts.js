@@ -31,4 +31,21 @@ router.put('/like/:id', authMiddleware, PostsController.likePost)
 // @ PUT Private Unlike post
 router.put('/unlike/:id', authMiddleware, PostsController.unLikePost)
 
+// @ POST Private add Comment to the post
+router.post(
+  '/comment/:id',
+  [
+    authMiddleware,
+    [
+      check('text', 'Text is required')
+        .not()
+        .isEmpty()
+    ]
+  ],
+  PostsController.addCommentToPost
+)
+
+// @ DELETE Private Delete Comment from the post
+router.delete('/comment/:id/:comment_id', authMiddleware, PostsController.deleteCommentFromPost)
+
 module.exports = router
