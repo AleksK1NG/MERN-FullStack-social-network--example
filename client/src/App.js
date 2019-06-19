@@ -12,6 +12,8 @@ import Navbar from './components/Layout/Navbar/Navbar'
 
 const HomePage = React.lazy(() => import('./pages/HomePage/HomePage'))
 const LandingPage = React.lazy(() => import('./pages/LandingPage/LandingPage'))
+const LoginPage = React.lazy(() => import('./pages/LoginPage/LoginPage'))
+const RegisterPage = React.lazy(() => import('./pages/RegisterPage/RegisterPage'))
 
 const App = ({ loadUser }) => {
   useEffect(() => {
@@ -19,20 +21,24 @@ const App = ({ loadUser }) => {
   }, [])
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Suspense fallback={<Spinner />}>
         <ErrorBoundary>
           <Fragment>
             <Navbar />
-            <Switch>
-              <Route exact path="/" component={LandingPage} />
-              <Route exact path="/home" component={HomePage} />
-            </Switch>
+            <Route exact path="/" component={LandingPage} />
+            <section className="container">
+              <Switch>
+                <Route exact path="/home" component={HomePage} />
+                <Route exact path="/login" component={LoginPage} />
+                <Route exact path="/register" component={RegisterPage} />
+              </Switch>
+            </section>
           </Fragment>
         </ErrorBoundary>
         <ToastContainer position={toast.POSITION.TOP_CENTER} />
       </Suspense>
-    </React.Fragment>
+    </Fragment>
   )
 }
 
