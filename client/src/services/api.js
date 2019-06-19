@@ -6,9 +6,9 @@ import axios from 'axios'
 const USERS_URL = '/api/users'
 const AUTH_URL = '/api/auth/'
 const LOGIN_URL = '/api/auth/login'
-const CURRENT_USER_PROFILE_URL = '/api/profile/me'
+const CURRENT_USER_PROFILE_URL = '/api/v1/profile/me'
 const PROFILES_URL = '/api/profile'
-const USER_PROFILE_URL = '/api/profile/user'
+const USER_PROFILE_URL = '/api/v1/profile/user'
 const GITHUB_REPOS_API_URL = '/api/profile/github'
 const PROFILE_EXPERIENCE_URL = '/api/profile/experience'
 const PROFILE_EDUCATION_URL = '/api/profile/education'
@@ -62,7 +62,7 @@ class ApiService {
     return axiosInstance.get(LOAD_USER_URL)
   }
 
-  getCurrentProfile() {
+  getCurrentUserProfile() {
     return axiosInstance.get(CURRENT_USER_PROFILE_URL)
   }
 

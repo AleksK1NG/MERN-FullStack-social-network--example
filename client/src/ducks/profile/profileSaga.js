@@ -27,14 +27,16 @@ import {
  * Sagas
  */
 
-export function* getCurrentProfileSaga() {
+export function* getCurrentUserProfileSaga() {
   try {
-    const { data } = yield call(api.getCurrentProfile);
+    const { data } = yield call(api.getCurrentUserProfile);
 
     yield put({
       type: GET_CURRENT_PROFILE_SUCCESS,
       payload: { data }
     });
+
+    debugger
   } catch (error) {
     console.log(error);
     yield put({
@@ -138,7 +140,7 @@ export function* addExperienceSaga(action) {
 
 export function* saga() {
   yield all([
-    takeEvery(GET_CURRENT_PROFILE_REQUEST, getCurrentProfileSaga),
+    takeEvery(GET_CURRENT_PROFILE_REQUEST, getCurrentUserProfileSaga),
     takeEvery(CREATE_PROFILE_REQUEST, createUserProfileSaga),
     takeEvery(UPDATE_PROFILE_REQUEST, updateUserProfileSaga),
     takeEvery(ADD_EDUCATION_REQUEST, addEducationSaga),

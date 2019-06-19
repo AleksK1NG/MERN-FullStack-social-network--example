@@ -25,7 +25,7 @@ export const getProfileById = (profileId) => {
   };
 };
 
-export const getCurrentProfile = () => {
+export const getCurrentUserProfile = () => {
   return {
     type: GET_CURRENT_PROFILE_REQUEST
   };

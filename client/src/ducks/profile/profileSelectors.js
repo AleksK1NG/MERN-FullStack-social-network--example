@@ -11,7 +11,7 @@ export const isLoadingSelector = createSelector(
   (state) => state.get('isLoading')
 );
 
-export const profileSelector = createSelector(
+export const userProfileSelector = createSelector(
   stateSelector,
   (state) => {
     const user = state.get('profile');
@@ -19,7 +19,7 @@ export const profileSelector = createSelector(
   }
 );
 
-export const profilesSelector = createSelector(
+export const userProfilesSelector = createSelector(
   stateSelector,
   (state) => {
     const user = state.get('profiles');
@@ -34,3 +34,4 @@ export const reposSelector = createSelector(
     return user ? user.toJS() : null;
   }
 );
+
