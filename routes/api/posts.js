@@ -22,8 +22,13 @@ router.get('/', PostsController.getAllPosts)
 // @ GET Public get post by id
 router.get('/:id', PostsController.getPostById)
 
-
 // @ DELETE Private delete post
 router.delete('/:id', authMiddleware, PostsController.deletePost)
+
+// @ PUT Private Like post
+router.put('/like/:id', authMiddleware, PostsController.likePost)
+
+// @ PUT Private Unlike post
+router.put('/unlike/:id', authMiddleware, PostsController.unLikePost)
 
 module.exports = router

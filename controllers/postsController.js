@@ -80,6 +80,58 @@ module.exports.deletePost = async (req, res) => {
     res.json({ msg: 'Post has been removed' })
   } catch (error) {
     console.error(error.message)
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Post not found' })
+    }
+
+    res.status(500).send('Server Error')
+  }
+}
+
+// @ PUT Like post
+module.exports.likePost = async (req, res) => {
+  try {
+    const post = Post.findOne({ user: req.user.id })
+
+    // Check if the post already liked
+    if (post.likes.filter((like) => like.user.toString() === req.user.id).length > 0) {
+      return res.status(400).json({ msg: 'Post is already liked' })
+    }
+
+    post.likes.unshift({ user: req.user.id })
+
+    await post.save()
+
+    res.status(201).json(post.likes)
+  } catch (error) {
+    console.error(error)
+    if (error.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Post not found' })
+    }
+    res.status(500).send('Server Error')
+  }
+}
+
+// @ PUT Unlike post
+module.exports.unLikePost = async (req, res) => {
+  try {
+    const post = Post.findOne({ user: req.user.id })
+
+    // Check if the post already liked
+    if (post.likes.filter((like) => like.user.toString() === req.user.id).length > 0) {
+      return res.status(400).json({ msg: 'Post is already liked' })
+    }
+
+    // Get index
+    const removeIndex = post.likes.map((like) => like.user.toString()).indexOf(req.user.id)
+
+    post.likes.splice(removeIndex, 1)
+
+    await post.save()
+
+    res.status(201).json(post.likes)
+  } catch (error) {
+    console.error(error)
     res.status(500).send('Server Error')
   }
 }
