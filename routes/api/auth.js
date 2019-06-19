@@ -11,7 +11,7 @@ router.get('/', authMiddleware, AuthController.loadUser)
 router.post(
   '/login',
   [check('email', 'Please enter valid email').isEmail(), check('password', 'Password is required').exists()],
-  AuthController.authAndGetToken
+  AuthController.login
 )
 
 // @ POST Public api/v1/auth Register user

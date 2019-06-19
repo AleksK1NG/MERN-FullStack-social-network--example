@@ -60,14 +60,12 @@ export function* loginSaga(action) {
   } = action
   debugger
   try {
-    const {
-      data: { token, ...user }
-    } = yield call(api.loginUser, userData)
-    localStorage.setItem('mern-dev', token)
+    const { data } = yield call(api.loginUser, userData)
+    localStorage.setItem('mern-dev', data.token)
 
     yield put({
       type: SIGN_IN_SUCCESS,
-      payload: { token, user }
+      payload: { data }
     })
     debugger
     yield put({

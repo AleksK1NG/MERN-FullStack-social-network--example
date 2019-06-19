@@ -17,8 +17,8 @@ module.exports.loadUser = async (req, res) => {
   }
 }
 
-// @POST Public load user and get token
-module.exports.authAndGetToken = async (req, res) => {
+// @POST Public login user and get token
+module.exports.login = async (req, res) => {
   const { email, password } = req.body
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -47,6 +47,7 @@ module.exports.authAndGetToken = async (req, res) => {
   }
 }
 
+// @POST Register user
 module.exports.register = async (req, res) => {
   const { email, name, password, info } = req.body
   const errors = validationResult(req)

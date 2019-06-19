@@ -16,7 +16,7 @@ const PROFILE_EXPERIENCE_URL = '/api/profile/experience'
 const PROFILE_EDUCATION_URL = '/api/profile/education'
 
 const USER_REGISTER_URL = '/api/v1/auth/register'
-const USER_LOGIN_URL = '/api/users/login'
+const USER_LOGIN_URL = '/api/v1/auth/login'
 const LOAD_USER_URL = '/api/users/me'
 
 // Axios Instance

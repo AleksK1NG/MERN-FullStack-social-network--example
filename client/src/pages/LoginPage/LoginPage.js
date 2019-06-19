@@ -8,7 +8,7 @@ import { loginUser } from '../../ducks/auth/authActions'
 const LoginPage = ({ loginUser }) => {
   const onSubmit = (values, formApi) => {
     console.log('Login form =>', values)
-    // loginUser(values)
+    loginUser(values)
     formApi.reset()
   }
 

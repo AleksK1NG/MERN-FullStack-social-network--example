@@ -43,7 +43,6 @@ export default function reducer(state = ReducerRecord, action) {
     case SIGN_IN_SUCCESS:
       return state
         .set('user', fromJS(payload.data))
-        .set('token', payload.token)
         .set('error', null)
         .set('isLoading', false)
         .set('isAuthenticated', true)
