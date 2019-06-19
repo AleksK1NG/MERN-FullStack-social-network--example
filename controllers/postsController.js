@@ -90,8 +90,9 @@ module.exports.deletePost = async (req, res) => {
 
 // @ PUT Like post
 module.exports.likePost = async (req, res) => {
+  console.log('like post => ', req.params.id)
   try {
-    const post = Post.findOne({ user: req.user.id })
+    const post = await Post.findById(req.params.id)
 
     // Check if the post already liked
     if (post.likes.filter((like) => like.user.toString() === req.user.id).length > 0) {
@@ -115,10 +116,10 @@ module.exports.likePost = async (req, res) => {
 // @ PUT Unlike post
 module.exports.unLikePost = async (req, res) => {
   try {
-    const post = Post.findOne({ user: req.user.id })
+    const post = await Post.findById(req.params.id)
 
     // Check if the post already liked
-    if (post.likes.filter((like) => like.user.toString() === req.user.id).length > 0) {
+    if (post.likes.filter((like) => like.user.toString() === req.user.id).length === 0) {
       return res.status(400).json({ msg: 'Post is already liked' })
     }
 
