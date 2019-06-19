@@ -36,9 +36,9 @@ export function* getCurrentUserProfileSaga() {
       payload: { data }
     });
 
-    debugger
+
   } catch (error) {
-    console.log(error);
+    console.error(error);
     yield put({
       type: GET_CURRENT_PROFILE_ERROR,
       payload: { error }
@@ -50,10 +50,10 @@ export function* createUserProfileSaga(action) {
   const {
     payload: { profileData }
   } = action;
-  debugger;
+
   try {
     const { data } = yield call(api.createAndUpdateUserProfile, profileData);
-    debugger;
+
     yield put({
       type: CREATE_PROFILE_SUCCESS,
       payload: { data }
