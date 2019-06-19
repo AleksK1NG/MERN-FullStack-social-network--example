@@ -10,7 +10,7 @@ const RegisterPage = ({ registerUser }) => {
     console.log('Register form =>', values)
     const { name, email, password } = values
     const newUser = { name, email, password }
-    // registerUser(newUser)
+    registerUser(newUser)
 
     formApi.reset()
   }

@@ -1,9 +1,9 @@
-import { replace } from 'connected-react-router';
-import { toast } from 'react-toastify';
+import { replace } from 'connected-react-router'
+import { toast } from 'react-toastify'
 
-import { takeEvery, call, put, all } from 'redux-saga/effects';
-import { rejectError } from '../../utils/rejectErrorHelper';
-import api from '../../services/api';
+import { takeEvery, call, put, all } from 'redux-saga/effects'
+import { rejectError } from '../../utils/rejectErrorHelper'
+import api from '../../services/api'
 import {
   LOAD_USER_ERROR,
   LOAD_USER_REQUEST,
@@ -20,8 +20,8 @@ import {
   UPDATE_USER_ERROR,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS
-} from './authConstants';
-import { CLEAR_PROFILE_SUCCESS, GET_CURRENT_PROFILE_REQUEST } from '../profile/profileConstants';
+} from './authConstants'
+import { CLEAR_PROFILE_SUCCESS, GET_CURRENT_PROFILE_REQUEST } from '../profile/profileConstants'
 
 /**
  * Sagas
@@ -30,80 +30,78 @@ import { CLEAR_PROFILE_SUCCESS, GET_CURRENT_PROFILE_REQUEST } from '../profile/p
 export function* registerSaga(action) {
   const {
     payload: { userData }
-  } = action;
-  debugger;
+  } = action
+
   try {
-    const {
-      data: { token, ...savedUser }
-    } = yield call(api.registerUser, userData);
+    const { data } = yield call(api.registerUser, userData)
 
     yield put({
       type: SIGN_UP_SUCCESS,
-      payload: { token, savedUser }
-    });
-    debugger;
-    localStorage.setItem('mern-dev', token);
+      payload: { data }
+    })
+    debugger
+    localStorage.setItem('mern-dev', data.token)
 
-    yield put(replace('/'));
-    toast.success('You are registered ! =D');
+    yield put(replace('/'))
+    toast.success('You are registered ! =D')
   } catch (error) {
-    console.log(error);
+    console.log(error)
     yield put({
       type: SIGN_UP_ERROR,
       payload: { error }
-    });
-    toast.error(rejectError(error));
+    })
+    toast.error(rejectError(error))
   }
 }
 
 export function* loginSaga(action) {
   const {
     payload: { userData }
-  } = action;
-  debugger;
+  } = action
+  debugger
   try {
     const {
       data: { token, ...user }
-    } = yield call(api.loginUser, userData);
-    localStorage.setItem('mern-dev', token);
+    } = yield call(api.loginUser, userData)
+    localStorage.setItem('mern-dev', token)
 
     yield put({
       type: SIGN_IN_SUCCESS,
       payload: { token, user }
-    });
-    debugger;
+    })
+    debugger
     yield put({
       type: GET_CURRENT_PROFILE_REQUEST
-    });
+    })
 
-    yield put(replace('/'));
-    toast.success('You are logged in ! =D');
+    yield put(replace('/'))
+    toast.success('You are logged in ! =D')
   } catch (error) {
-    console.log(error);
+    console.log(error)
     // localStorage.removeItem('react-meetuper');
     yield put({
       type: SIGN_IN_ERROR,
       payload: { error }
-    });
-    toast.error(rejectError(error));
+    })
+    toast.error(rejectError(error))
   }
 }
 
 export function* loadUserSaga() {
   try {
-    const { data } = yield call(api.loadUser);
-    debugger;
+    const { data } = yield call(api.loadUser)
+    debugger
     yield put({
       type: LOAD_USER_SUCCESS,
       payload: { data }
-    });
+    })
   } catch (error) {
-    console.log(error);
-    localStorage.removeItem('mern-dev');
+    console.log(error)
+    localStorage.removeItem('mern-dev')
     yield put({
       type: LOAD_USER_ERROR,
       payload: { error }
-    });
+    })
   }
 }
 
@@ -113,43 +111,43 @@ export function* logoutSaga() {
 
     yield put({
       type: SIGN_OUT_SUCCESS
-    });
+    })
     yield put({
       type: CLEAR_PROFILE_SUCCESS
-    });
-    localStorage.removeItem('mern-dev');
-    toast.warn('You are logged out');
-    yield put(replace('/'));
+    })
+    localStorage.removeItem('mern-dev')
+    toast.warn('You are logged out')
+    yield put(replace('/'))
   } catch (error) {
-    console.log(error);
-    localStorage.removeItem('mern-dev');
+    console.log(error)
+    localStorage.removeItem('mern-dev')
     yield put({
       type: SIGN_OUT_ERROR,
       payload: { error }
-    });
+    })
   }
 }
 
 export function* updateUserSaga(action) {
   const {
     payload: { user }
-  } = action;
+  } = action
 
   try {
-    const { data } = yield call(api.updateUser, user);
+    const { data } = yield call(api.updateUser, user)
     yield put({
       type: UPDATE_USER_SUCCESS,
       payload: { data }
-    });
-    debugger;
-    yield put(replace('/profile'));
+    })
+    debugger
+    yield put(replace('/profile'))
     // toast.success('Your profile successfully has been updated =D');
   } catch (error) {
-    console.log(error);
+    console.log(error)
     yield put({
       type: UPDATE_USER_ERROR,
       payload: { error }
-    });
+    })
     // toast.error(rejectError(error));
   }
 }
@@ -161,5 +159,5 @@ export function* saga() {
     takeEvery(SIGN_IN_REQUEST, loginSaga),
     takeEvery(SIGN_OUT_REQUEST, logoutSaga),
     takeEvery(UPDATE_USER_REQUEST, updateUserSaga)
-  ]);
+  ])
 }
