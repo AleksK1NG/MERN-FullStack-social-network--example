@@ -5,7 +5,7 @@ const AuthController = require('../../controllers/authController')
 const { check } = require('express-validator/check')
 
 // @ GET Public api/v1/auth Load current user by token
-router.get('/', authMiddleware, AuthController.loadUser)
+router.get('/me', authMiddleware, AuthController.loadUser)
 
 // @ POST Public api/v1/auth Login user
 router.post(

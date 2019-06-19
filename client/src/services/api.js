@@ -1,10 +1,8 @@
 import axios from 'axios'
-import setAuthToken from '../utils/setAuthToken'
 /*
  * Api Service
  * */
 
-const booksListURL = 'http://localhost:3001/booksList'
 const USERS_URL = '/api/users'
 const AUTH_URL = '/api/auth/'
 const LOGIN_URL = '/api/auth/login'
@@ -17,7 +15,7 @@ const PROFILE_EDUCATION_URL = '/api/profile/education'
 
 const USER_REGISTER_URL = '/api/v1/auth/register'
 const USER_LOGIN_URL = '/api/v1/auth/login'
-const LOAD_USER_URL = '/api/users/me'
+const LOAD_USER_URL = '/api/v1/auth/me'
 
 // Axios Instance
 const axiosInstance = axios.create({
@@ -30,9 +28,8 @@ axiosInstance.interceptors.request.use(
     const token = localStorage.getItem('mern-dev') || ''
 
     if (token && token !== '') {
-      setAuthToken(token)
+      config.headers['x-auth-token'] = token
     }
-
     return config
   },
   function(err) {
@@ -70,9 +67,6 @@ class ApiService {
   }
 
   createAndUpdateUserProfile(profileData) {
-    if (localStorage.getItem('mern-dev')) {
-      setAuthToken(localStorage.getItem('mern-dev'))
-    }
     debugger
     const config = {
       headers: {
@@ -80,7 +74,7 @@ class ApiService {
       }
     }
 
-    return axios.post(PROFILES_URL, profileData, config)
+    return axiosInstance.post(PROFILES_URL, profileData, config)
   }
 
   addExperience(formData) {
@@ -105,4 +99,3 @@ class ApiService {
 }
 
 export default new ApiService()
-

@@ -39,7 +39,7 @@ export function* registerSaga(action) {
       type: SIGN_UP_SUCCESS,
       payload: { data }
     })
-    debugger
+
     localStorage.setItem('mern-dev', data.token)
 
     yield put(replace('/'))
@@ -58,7 +58,7 @@ export function* loginSaga(action) {
   const {
     payload: { userData }
   } = action
-  debugger
+
   try {
     const { data } = yield call(api.loginUser, userData)
     localStorage.setItem('mern-dev', data.token)
@@ -67,7 +67,7 @@ export function* loginSaga(action) {
       type: SIGN_IN_SUCCESS,
       payload: { data }
     })
-    debugger
+
     yield put({
       type: GET_CURRENT_PROFILE_REQUEST
     })
@@ -75,8 +75,8 @@ export function* loginSaga(action) {
     yield put(replace('/'))
     toast.success('You are logged in ! =D')
   } catch (error) {
-    console.log(error)
-    // localStorage.removeItem('react-meetuper');
+    console.error(error)
+
     yield put({
       type: SIGN_IN_ERROR,
       payload: { error }
@@ -88,13 +88,13 @@ export function* loginSaga(action) {
 export function* loadUserSaga() {
   try {
     const { data } = yield call(api.loadUser)
-    debugger
+
     yield put({
       type: LOAD_USER_SUCCESS,
       payload: { data }
     })
   } catch (error) {
-    console.log(error)
+    console.error(error)
     localStorage.removeItem('mern-dev')
     yield put({
       type: LOAD_USER_ERROR,
