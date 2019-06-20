@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Field } from 'react-final-form'
-import { validateCreateProfileForm } from '../../utils/finalFormValidators/validateCreateProfileForm'
+import { validateAddExperienceForm } from '../../utils/finalFormValidators/validateAddExperienceForm'
 
 const AddExperiencePage = () => {
   const onSubmit = (values, formApi) => {
@@ -19,6 +19,7 @@ const AddExperiencePage = () => {
       <small>* = required field</small>
 
       <Form
+        validate={validateAddExperienceForm}
         onSubmit={onSubmit}
         render={({ handleSubmit, pristine, invalid }) => (
           <form onSubmit={handleSubmit} className="form">
@@ -79,13 +80,12 @@ const AddExperiencePage = () => {
               {({ input, meta }) => (
                 <div className="field">
                   <textarea {...input} className="textarea" placeholder="Job Description" cols="30" rows="5" />
-                  <small className="form-text">Tell us a little about yourself</small>
                   {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
                 </div>
               )}
             </Field>
 
-            <input type="submit" className="btn btn-primary my-1" />
+            <input type="submit" className="btn btn-primary my-1" disabled={pristine || invalid} />
             <Link to="/dashboard" className="btn btn-light my-1">
               Go Back
             </Link>
