@@ -1,19 +1,24 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Field, Form } from 'react-final-form'
-import './CreateProfilePage.scss'
 import { validateCreateProfileForm } from '../../utils/finalFormValidators/validateCreateProfileForm'
-import { createUserProfile } from '../../ducks/profile/profileActions'
+import { getCurrentUserProfile, updateUserProfile } from '../../ducks/profile/profileActions'
+import { userProfileSelector } from '../../ducks/profile/profileSelectors'
+import Spinner from '../../components/Shared/Spinner/Spinner'
 import { categories } from '../../data/jobTitlesData'
 
-const CreateProfilePage = ({ createUserProfile }) => {
+const EditProfilePage = ({ updateUserProfile, userProfile, getCurrentUserProfile }) => {
+  useEffect(() => {
+    getCurrentUserProfile()
+  }, [getCurrentUserProfile])
   const [showSocialInputs, setShowSocialInputs] = useState(false)
 
   const onSubmit = (values, formApi) => {
-    createUserProfile(values)
-
+    updateUserProfile(values)
     formApi.reset()
   }
+
+  if (!userProfile) return <Spinner />
 
   return (
     <section className="container">
@@ -24,6 +29,20 @@ const CreateProfilePage = ({ createUserProfile }) => {
       <small>* = required field</small>
 
       <Form
+        initialValues={{
+          company: userProfile.company || '',
+          website: userProfile.website || '',
+          location: userProfile.company || '',
+          status: userProfile.location || '',
+          skills: userProfile.status || '',
+          githubusername: userProfile.githubusername || '',
+          bio: userProfile.bio || '',
+          twitter: userProfile.twitter || '',
+          facebook: userProfile.facebook || '',
+          linkedin: userProfile.linkedin || '',
+          youtube: userProfile.youtube || '',
+          instagram: userProfile.instagram || ''
+        }}
         validate={validateCreateProfileForm}
         onSubmit={onSubmit}
         render={({ handleSubmit, pristine, invalid }) => (
@@ -169,7 +188,7 @@ const CreateProfilePage = ({ createUserProfile }) => {
               </Fragment>
             )}
 
-            <input type="submit" className="btn btn-primary my-1" disabled={pristine || invalid} />
+            <input type="submit" className="btn btn-primary my-1" disabled={invalid} />
             <a className="btn btn-light my-1" href="dashboard.html">
               Go Back
             </a>
@@ -181,6 +200,8 @@ const CreateProfilePage = ({ createUserProfile }) => {
 }
 
 export default connect(
-  null,
-  { createUserProfile }
-)(CreateProfilePage)
+  (state) => ({
+    userProfile: userProfileSelector(state)
+  }),
+  { updateUserProfile, getCurrentUserProfile }
+)(EditProfilePage)

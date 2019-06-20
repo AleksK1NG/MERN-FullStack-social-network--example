@@ -77,12 +77,13 @@ export function* updateUserProfileSaga(action) {
   } = action;
   debugger;
   try {
-    const { data } = yield call(api.createAndUpdateUserProfile, profileData);
+    const { data } = yield call(api.updateUserProfile, profileData);
     debugger;
     yield put({
       type: UPDATE_PROFILE_SUCCESS,
       payload: { data }
     });
+    debugger
     toast.success('Success ! =D');
   } catch (error) {
     console.log(error);

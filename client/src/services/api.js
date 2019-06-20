@@ -88,6 +88,16 @@ class ApiService {
     return axiosInstance.post(PROFILE_URL, profileData, config)
   }
 
+  updateUserProfile(profileData) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    return axiosInstance.patch(PROFILE_URL, profileData, config)
+  }
+
   addExperience(formData) {
     const config = {
       headers: {
