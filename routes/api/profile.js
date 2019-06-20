@@ -94,24 +94,7 @@ router.put(
 )
 
 // @ DELETE Private Delete profile, user & posts
-router.delete(
-  '/',
-  [
-    authMiddleware,
-    [
-      check('title', 'Title is required')
-        .not()
-        .isEmpty(),
-      check('company', 'Company is required')
-        .not()
-        .isEmpty(),
-      check('from', 'From date is required')
-        .not()
-        .isEmpty()
-    ]
-  ],
-  ProfilesController.deleteUserProfile
-)
+router.delete('/', authMiddleware, ProfilesController.deleteUserProfile)
 
 // @ DELETE Private Delete experience
 router.delete('/experience/:exp_id', authMiddleware, ProfilesController.deleteExperience)

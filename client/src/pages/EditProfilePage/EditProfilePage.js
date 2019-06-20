@@ -6,6 +6,7 @@ import { getCurrentUserProfile, updateUserProfile } from '../../ducks/profile/pr
 import { userProfileSelector } from '../../ducks/profile/profileSelectors'
 import Spinner from '../../components/Shared/Spinner/Spinner'
 import { categories } from '../../data/jobTitlesData'
+import { Link } from 'react-router-dom'
 
 const EditProfilePage = ({ updateUserProfile, userProfile, getCurrentUserProfile }) => {
   useEffect(() => {
@@ -189,9 +190,9 @@ const EditProfilePage = ({ updateUserProfile, userProfile, getCurrentUserProfile
             )}
 
             <input type="submit" className="btn btn-primary my-1" disabled={invalid} />
-            <a className="btn btn-light my-1" href="dashboard.html">
+            <Link to="/dashboard" className="btn btn-light my-1">
               Go Back
-            </a>
+            </Link>
           </form>
         )}
       />

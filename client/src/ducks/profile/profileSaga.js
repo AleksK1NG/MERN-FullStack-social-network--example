@@ -14,7 +14,7 @@ import {
   ADD_EXPERIENCE_SUCCESS,
   CREATE_PROFILE_ERROR,
   CREATE_PROFILE_REQUEST,
-  CREATE_PROFILE_SUCCESS,
+  CREATE_PROFILE_SUCCESS, DELETE_PROFILE_REQUEST, DELETE_PROFILE_SUCCESS,
   GET_CURRENT_PROFILE_ERROR,
   GET_CURRENT_PROFILE_REQUEST,
   GET_CURRENT_PROFILE_SUCCESS,
@@ -60,7 +60,7 @@ export function* createUserProfileSaga(action) {
     toast.success('Success ! =D')
     yield put(replace('/dashboard'))
   } catch (error) {
-    console.log(error)
+    console.error(error)
     yield put({
       type: CREATE_PROFILE_ERROR,
       payload: { error }
@@ -85,7 +85,7 @@ export function* updateUserProfileSaga(action) {
     toast.success('Success ! =D')
     yield put(replace('/dashboard'))
   } catch (error) {
-    console.log(error)
+    console.error(error)
     yield put({
       type: UPDATE_PROFILE_ERROR,
       payload: { error }
@@ -108,7 +108,7 @@ export function* addEducationSaga(action) {
     })
     toast.success('Success ! =D')
   } catch (error) {
-    console.log(error)
+    console.error(error)
     yield put({
       type: ADD_EDUCATION_ERROR,
       payload: { error }
@@ -131,7 +131,7 @@ export function* addExperienceSaga(action) {
     })
     toast.success('Success ! =D')
   } catch (error) {
-    console.log(error)
+    console.error(error)
     yield put({
       type: ADD_EXPERIENCE_ERROR,
       payload: { error }
@@ -140,12 +140,34 @@ export function* addExperienceSaga(action) {
   }
 }
 
+export function* deleteProfileSaga() {
+
+  try {
+    const data = yield call(api.deleteProfile)
+    debugger
+    yield put({
+      type: DELETE_PROFILE_SUCCESS
+    })
+    toast.success('Profile was deleted !')
+    yield put(replace('/'))
+  } catch (error) {
+    console.error(error)
+    yield put({
+      type: ADD_EXPERIENCE_ERROR,
+      payload: { error }
+    })
+    toast.error(rejectError(error))
+  }
+}
+
+
 export function* saga() {
   yield all([
     takeEvery(GET_CURRENT_PROFILE_REQUEST, getCurrentUserProfileSaga),
     takeEvery(CREATE_PROFILE_REQUEST, createUserProfileSaga),
     takeEvery(UPDATE_PROFILE_REQUEST, updateUserProfileSaga),
     takeEvery(ADD_EDUCATION_REQUEST, addEducationSaga),
-    takeEvery(ADD_EXPERIENCE_REQUEST, addExperienceSaga)
+    takeEvery(ADD_EXPERIENCE_REQUEST, addExperienceSaga),
+    takeEvery(DELETE_PROFILE_REQUEST, deleteProfileSaga),
   ])
 }

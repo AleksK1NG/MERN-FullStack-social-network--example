@@ -117,6 +117,17 @@ class ApiService {
 
     return axios.put(PROFILE_EDUCATION_URL, formData, config)
   }
+
+  deleteProfile() {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    return axiosInstance.delete(PROFILE_URL, config)
+  }
+
 }
 
 export default new ApiService()

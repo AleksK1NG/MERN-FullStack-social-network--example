@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { fromJS } from 'immutable'
 
 import {
   ADD_EDUCATION_ERROR,
@@ -11,6 +11,8 @@ import {
   CREATE_PROFILE_ERROR,
   CREATE_PROFILE_REQUEST,
   CREATE_PROFILE_SUCCESS,
+  DELETE_PROFILE_ERROR,
+  DELETE_PROFILE_SUCCESS,
   GET_CURRENT_PROFILE_ERROR,
   GET_CURRENT_PROFILE_SUCCESS,
   GET_PROFILE_BY_ID_ERROR,
@@ -25,7 +27,7 @@ import {
   UPDATE_PROFILE_ERROR,
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS
-} from './profileConstants';
+} from './profileConstants'
 
 /**
  * Reducer
@@ -36,10 +38,10 @@ export const ReducerRecord = fromJS({
   repos: null,
   error: null,
   isLoading: true
-});
+})
 
 export default function reducer(state = ReducerRecord, action) {
-  const { type, payload } = action;
+  const { type, payload } = action
 
   switch (type) {
     case GET_REPOS_REQUEST:
@@ -49,13 +51,13 @@ export default function reducer(state = ReducerRecord, action) {
     case UPDATE_PROFILE_REQUEST:
     case ADD_EXPERIENCE_REQUEST:
     case ADD_EDUCATION_REQUEST:
-      return state.set('isLoading', true);
+      return state.set('isLoading', true)
 
     case CLEAR_PROFILE_SUCCESS:
       return state
         .set('profile', null)
         .set('isLoading', false)
-        .set('error', null);
+        .set('error', null)
 
     // case GET_PROFILE_BY_ID_SUCCESS:
     // case GET_CURRENT_PROFILE_SUCCESS:
@@ -75,20 +77,21 @@ export default function reducer(state = ReducerRecord, action) {
           .set('profile', fromJS(payload.data))
           .set('error', null)
           .set('isLoading', false)
-      );
+      )
 
     case GET_REPOS_SUCCESS:
       return state
         .set('repos', fromJS(payload.data))
         .set('isLoading', false)
-        .set('error', null);
+        .set('error', null)
 
     case GET_PROFILES_SUCCESS:
       return state
         .set('profiles', fromJS(payload.data))
         .set('isLoading', false)
-        .set('user', null);
+        .set('user', null)
 
+    case DELETE_PROFILE_ERROR:
     case GET_PROFILE_BY_ID_ERROR:
     case GET_PROFILES_ERROR:
     case GET_REPOS_ERROR:
@@ -97,15 +100,21 @@ export default function reducer(state = ReducerRecord, action) {
     case CREATE_PROFILE_ERROR:
     case ADD_EXPERIENCE_ERROR:
     case ADD_EDUCATION_ERROR:
-      return state.set('error', payload.error).set('isLoading', false);
+      return state.set('error', payload.error).set('isLoading', false)
 
     case CREATE_PROFILE_SUCCESS:
       return state
         .set('profile', fromJS(payload.data))
         .set('error', null)
-        .set('isLoading', false);
+        .set('isLoading', false)
+
+    case DELETE_PROFILE_SUCCESS:
+      return state
+        .set('profile', null)
+        .set('error', null)
+        .set('isLoading', false)
 
     default:
-      return state;
+      return state
   }
 }

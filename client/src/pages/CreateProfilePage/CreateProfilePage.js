@@ -5,6 +5,7 @@ import './CreateProfilePage.scss'
 import { validateCreateProfileForm } from '../../utils/finalFormValidators/validateCreateProfileForm'
 import { createUserProfile } from '../../ducks/profile/profileActions'
 import { categories } from '../../data/jobTitlesData'
+import { Link } from 'react-router-dom'
 
 const CreateProfilePage = ({ createUserProfile }) => {
   const [showSocialInputs, setShowSocialInputs] = useState(false)
@@ -170,9 +171,9 @@ const CreateProfilePage = ({ createUserProfile }) => {
             )}
 
             <input type="submit" className="btn btn-primary my-1" disabled={pristine || invalid} />
-            <a className="btn btn-light my-1" href="dashboard.html">
+            <Link to="/dashboard" className="btn btn-light my-1">
               Go Back
-            </a>
+            </Link>
           </form>
         )}
       />

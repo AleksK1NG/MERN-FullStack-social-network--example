@@ -1,7 +1,7 @@
 import React, { useEffect, lazy, Fragment } from 'react'
 import './DashboardPage.scss'
 import { connect } from 'react-redux'
-import { getCurrentUserProfile } from '../../ducks/profile/profileActions'
+import { deleteProfile, getCurrentUserProfile } from '../../ducks/profile/profileActions'
 import { isLoadingSelector, userProfileSelector } from '../../ducks/profile/profileSelectors'
 import Spinner from '../../components/Shared/Spinner/Spinner'
 import { userSelector } from '../../ducks/auth/authSelectors'
@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 const Experience = load(lazy(() => import('../../components/Dashboard/Experience/Experience')))
 const Education = load(lazy(() => import('../../components/Dashboard/Education/Education')))
 
-const DashboardPage = ({ getCurrentUserProfile, userProfile, isLoading, user }) => {
+const DashboardPage = ({ getCurrentUserProfile, userProfile, isLoading, user, deleteProfile }) => {
   useEffect(() => {
     getCurrentUserProfile()
   }, [getCurrentUserProfile])
@@ -33,7 +33,7 @@ const DashboardPage = ({ getCurrentUserProfile, userProfile, isLoading, user }) 
           <Education education={userProfile.education} />
 
           <div className="my-2">
-            <button className="btn btn-danger">
+            <button className="btn btn-danger" onClick={deleteProfile}>
               <i className="fas fa-user-minus"></i>
               Delete My Account
             </button>
@@ -57,5 +57,5 @@ export default connect(
     isLoading: isLoadingSelector(state),
     user: userSelector(state)
   }),
-  { getCurrentUserProfile }
+  { getCurrentUserProfile, deleteProfile }
 )(DashboardPage)

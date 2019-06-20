@@ -13,6 +13,7 @@ import {
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS
 } from './authConstants'
+import { DELETE_PROFILE_SUCCESS } from '../profile/profileConstants'
 
 /**
  * Reducer
@@ -66,13 +67,18 @@ export default function reducer(state = ReducerRecord, action) {
     case LOAD_USER_ERROR:
       return state.set('error', payload.error).set('isLoading', false)
 
-
-
     case UPDATE_USER_SUCCESS:
       return state
         .merge({ user: fromJS(payload.data) })
         .set('error', null)
         .set('isLoading', false)
+
+    case DELETE_PROFILE_SUCCESS:
+      return state
+        .set('user', null)
+        .set('error', null)
+        .set('isLoading', false)
+        .set('isAuthenticated', false)
 
     default:
       return state
