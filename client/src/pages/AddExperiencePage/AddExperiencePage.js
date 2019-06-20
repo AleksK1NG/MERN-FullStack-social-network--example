@@ -1,45 +1,97 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Form, Field } from 'react-final-form'
+import { validateCreateProfileForm } from '../../utils/finalFormValidators/validateCreateProfileForm'
 
 const AddExperiencePage = () => {
+  const onSubmit = (values, formApi) => {
+    // createUserProfile(values)
+    console.log(' Add education values => ', values)
+    formApi.reset()
+  }
+
   return (
     <section className="container">
       <h1 className="large text-primary">Add An Experience</h1>
       <p className="lead">
-        <i className="fas fa-code-branch"></i> Add any developer/programming positions that you have had in the past
+        <i className="fas fa-code-branch"></i> Add any job positions that you have had in the past
       </p>
       <small>* = required field</small>
-      <form className="form">
-        <div className="form-group">
-          <input type="text" placeholder="* Job Title" name="title" required />
-        </div>
-        <div className="form-group">
-          <input type="text" placeholder="* Company" name="company" required />
-        </div>
-        <div className="form-group">
-          <input type="text" placeholder="Location" name="location" />
-        </div>
-        <div className="form-group">
-          <h4>From Date</h4>
-          <input type="date" name="from" />
-        </div>
-        <div className="form-group">
-          <p>
-            <input type="checkbox" name="current" value="" /> Current Job
-          </p>
-        </div>
-        <div className="form-group">
-          <h4>To Date</h4>
-          <input type="date" name="to" />
-        </div>
-        <div className="form-group">
-          <textarea name="description" cols="30" rows="5" placeholder="Job Description"></textarea>
-        </div>
-        <input type="submit" className="btn btn-primary my-1" />
-        <Link to="/dashboard" className="btn btn-light my-1">
-          Go Back
-        </Link>
-      </form>
+
+      <Form
+        onSubmit={onSubmit}
+        render={({ handleSubmit, pristine, invalid }) => (
+          <form onSubmit={handleSubmit} className="form">
+            <Field name="title" component="input" type="text" label="* Job Title">
+              {({ input, meta }) => (
+                <div className="form-group">
+                  <input type="text" {...input} placeholder="* Job Title" />
+                  {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
+                </div>
+              )}
+            </Field>
+
+            <Field name="company" component="input" type="text" label="* Company">
+              {({ input, meta }) => (
+                <div className="form-group">
+                  <input type="text" {...input} placeholder="* Company" />
+                  {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
+                </div>
+              )}
+            </Field>
+
+            <Field name="location" component="input" type="text" label="Location">
+              {({ input, meta }) => (
+                <div className="form-group">
+                  <input type="text" {...input} placeholder="Location" />
+                  {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
+                </div>
+              )}
+            </Field>
+
+            <Field name="from" component="input" type="date" label="from">
+              {({ input, meta }) => (
+                <div className="form-group">
+                  <h4>From Date</h4>
+                  <input type="date" {...input} />
+                  {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
+                </div>
+              )}
+            </Field>
+
+            <div className="form-group">
+              <p>
+                <input type="checkbox" name="current" value="" /> Current Job
+              </p>
+            </div>
+
+            <Field name="to" component="input" type="date" label="to">
+              {({ input, meta }) => (
+                <div className="form-group">
+                  <h4>To Date</h4>
+                  <input type="date" {...input} />
+                  {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
+                </div>
+              )}
+            </Field>
+
+            <Field name="description" component="textarea" type="text" label="Job Description">
+              {({ input, meta }) => (
+                <div className="field">
+                  <textarea {...input} className="textarea" placeholder="Job Description" cols="30" rows="5" />
+                  <small className="form-text">Tell us a little about yourself</small>
+                  {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
+                </div>
+              )}
+            </Field>
+
+            <input type="submit" className="btn btn-primary my-1" />
+            <Link to="/dashboard" className="btn btn-light my-1">
+              Go Back
+            </Link>
+          </form>
+        )}
+      />
     </section>
   )
 }
