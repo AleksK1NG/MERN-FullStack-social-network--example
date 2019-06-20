@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Field } from 'react-final-form'
 import { validateAddExperienceForm } from '../../utils/finalFormValidators/validateAddExperienceForm'
 
 const AddExperiencePage = () => {
+  const [disableDate, setDisableDate] = useState(false)
   const onSubmit = (values, formApi) => {
     // createUserProfile(values)
     console.log(' Add education values => ', values)
@@ -62,19 +63,21 @@ const AddExperiencePage = () => {
 
             <div className="form-group">
               <p>
-                <input type="checkbox" name="current" value="" /> Current Job
+                <input type="checkbox" name="current" value="" onChange={() => setDisableDate(!disableDate)} /> Current Job
               </p>
             </div>
 
-            <Field name="to" component="input" type="date" label="to">
-              {({ input, meta }) => (
-                <div className="form-group">
-                  <h4>To Date</h4>
-                  <input type="date" {...input} />
-                  {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
-                </div>
-              )}
-            </Field>
+            {!disableDate && (
+              <Field name="to" component="input" type="date" label="to">
+                {({ input, meta }) => (
+                  <div className="form-group">
+                    <h4>To Date</h4>
+                    <input type="date" {...input} disabled={disableDate} />
+                    {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
+                  </div>
+                )}
+              </Field>
+            )}
 
             <Field name="description" component="textarea" type="text" label="Job Description">
               {({ input, meta }) => (
