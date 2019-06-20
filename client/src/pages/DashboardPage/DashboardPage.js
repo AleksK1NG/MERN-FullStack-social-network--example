@@ -1,4 +1,4 @@
-import React, { useEffect, lazy } from 'react'
+import React, { useEffect, lazy, Fragment } from 'react'
 import './DashboardPage.scss'
 import { connect } from 'react-redux'
 import { getCurrentUserProfile } from '../../ducks/profile/profileActions'
@@ -6,6 +6,8 @@ import { isLoadingSelector, userProfileSelector } from '../../ducks/profile/prof
 import Spinner from '../../components/Shared/Spinner/Spinner'
 import { userSelector } from '../../ducks/auth/authSelectors'
 import { load } from '../../utils/lazyLoadSingleComponent/lazyLoadSingleComponent'
+import DashboardActions from '../../components/Dashboard/DashboardActions/DashboardActions'
+import { Link } from 'react-router-dom'
 
 const Experience = load(lazy(() => import('../../components/Dashboard/Experience/Experience')))
 const Education = load(lazy(() => import('../../components/Dashboard/Education/Education')))
@@ -23,28 +25,28 @@ const DashboardPage = ({ getCurrentUserProfile, userProfile, isLoading, user }) 
       <p className="lead">
         <i className="fas fa-user"></i> Welcome {user && user.name}
       </p>
-      <div className="dash-buttons">
-        <a href="create-profile.html" className="btn btn-light">
-          <i className="fas fa-user-circle text-primary"></i> Edit Profile
-        </a>
-        <a href="add-experience.html" className="btn btn-light">
-          <i className="fab fa-black-tie text-primary"></i> Add Experience
-        </a>
-        <a href="add-education.html" className="btn btn-light">
-          <i className="fas fa-graduation-cap text-primary"></i> Add Education
-        </a>
-      </div>
 
-      {userProfile && <Experience experience={userProfile.experience} />}
+      {userProfile ? (
+        <Fragment>
+          <DashboardActions />
+          <Experience experience={userProfile.experience} />
+          <Education education={userProfile.education} />
 
-      {userProfile && <Education education={userProfile.education} />}
-
-      <div className="my-2">
-        <button className="btn btn-danger">
-          <i className="fas fa-user-minus"></i>
-          Delete My Account
-        </button>
-      </div>
+          <div className="my-2">
+            <button className="btn btn-danger">
+              <i className="fas fa-user-minus"></i>
+              Delete My Account
+            </button>
+          </div>
+        </Fragment>
+      ) : (
+        <Fragment>
+          <p>You have not yet setup a profile, please add some info</p>
+          <Link to="/create-profile" className="btn btn-primary my-1">
+            Create Profile
+          </Link>
+        </Fragment>
+      )}
     </section>
   )
 }
@@ -57,4 +59,3 @@ export default connect(
   }),
   { getCurrentUserProfile }
 )(DashboardPage)
-

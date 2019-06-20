@@ -1,9 +1,9 @@
-// import { replace } from 'connected-react-router';
-import { toast } from 'react-toastify';
+import { replace } from 'connected-react-router'
+import { toast } from 'react-toastify'
 
-import { takeEvery, call, put, all } from 'redux-saga/effects';
-import { rejectError } from '../../utils/rejectErrorHelper';
-import api from '../../services/api';
+import { takeEvery, call, put, all } from 'redux-saga/effects'
+import { rejectError } from '../../utils/rejectErrorHelper'
+import api from '../../services/api'
 
 import {
   ADD_EDUCATION_ERROR,
@@ -21,7 +21,7 @@ import {
   UPDATE_PROFILE_ERROR,
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS
-} from './profileConstants';
+} from './profileConstants'
 
 /**
  * Sagas
@@ -29,115 +29,114 @@ import {
 
 export function* getCurrentUserProfileSaga() {
   try {
-    const { data } = yield call(api.getCurrentUserProfile);
+    const { data } = yield call(api.getCurrentUserProfile)
 
     yield put({
       type: GET_CURRENT_PROFILE_SUCCESS,
       payload: { data }
-    });
-
-
+    })
   } catch (error) {
-    console.error(error);
+    console.error(error)
     yield put({
       type: GET_CURRENT_PROFILE_ERROR,
       payload: { error }
-    });
+    })
   }
 }
 
 export function* createUserProfileSaga(action) {
   const {
     payload: { profileData }
-  } = action;
-
+  } = action
 
   try {
-    const { data } = yield call(api.createUserProfile, profileData);
+    const { data } = yield call(api.createUserProfile, profileData)
 
     yield put({
       type: CREATE_PROFILE_SUCCESS,
       payload: { data }
-    });
+    })
 
-    toast.success('Success ! =D');
+    toast.success('Success ! =D')
+    yield put(replace('/dashboard'))
   } catch (error) {
-    console.log(error);
+    console.log(error)
     yield put({
       type: CREATE_PROFILE_ERROR,
       payload: { error }
-    });
-    toast.error(rejectError(error));
+    })
+    toast.error(rejectError(error))
   }
 }
 
 export function* updateUserProfileSaga(action) {
   const {
     payload: { profileData }
-  } = action;
-  debugger;
+  } = action
+
   try {
-    const { data } = yield call(api.updateUserProfile, profileData);
-    debugger;
+    const { data } = yield call(api.updateUserProfile, profileData)
+
     yield put({
       type: UPDATE_PROFILE_SUCCESS,
       payload: { data }
-    });
-    debugger
-    toast.success('Success ! =D');
+    })
+
+    toast.success('Success ! =D')
+    yield put(replace('/dashboard'))
   } catch (error) {
-    console.log(error);
+    console.log(error)
     yield put({
       type: UPDATE_PROFILE_ERROR,
       payload: { error }
-    });
-    toast.error(rejectError(error));
+    })
+    toast.error(rejectError(error))
   }
 }
 
 export function* addEducationSaga(action) {
   const {
     payload: { eduData }
-  } = action;
-  debugger;
+  } = action
+  debugger
   try {
-    const { data } = yield call(api.addEducation, eduData);
-    debugger;
+    const { data } = yield call(api.addEducation, eduData)
+    debugger
     yield put({
       type: ADD_EDUCATION_SUCCESS,
       payload: { data }
-    });
-    toast.success('Success ! =D');
+    })
+    toast.success('Success ! =D')
   } catch (error) {
-    console.log(error);
+    console.log(error)
     yield put({
       type: ADD_EDUCATION_ERROR,
       payload: { error }
-    });
-    toast.error(rejectError(error));
+    })
+    toast.error(rejectError(error))
   }
 }
 
 export function* addExperienceSaga(action) {
   const {
     payload: { expData }
-  } = action;
-  debugger;
+  } = action
+  debugger
   try {
-    const { data } = yield call(api.addExperience, expData);
-    debugger;
+    const { data } = yield call(api.addExperience, expData)
+    debugger
     yield put({
       type: ADD_EXPERIENCE_SUCCESS,
       payload: { data }
-    });
-    toast.success('Success ! =D');
+    })
+    toast.success('Success ! =D')
   } catch (error) {
-    console.log(error);
+    console.log(error)
     yield put({
       type: ADD_EXPERIENCE_ERROR,
       payload: { error }
-    });
-    toast.error(rejectError(error));
+    })
+    toast.error(rejectError(error))
   }
 }
 
@@ -148,5 +147,5 @@ export function* saga() {
     takeEvery(UPDATE_PROFILE_REQUEST, updateUserProfileSaga),
     takeEvery(ADD_EDUCATION_REQUEST, addEducationSaga),
     takeEvery(ADD_EXPERIENCE_REQUEST, addExperienceSaga)
-  ]);
+  ])
 }
