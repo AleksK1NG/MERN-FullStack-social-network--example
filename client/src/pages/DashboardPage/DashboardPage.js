@@ -1,22 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, lazy, Suspense } from 'react'
 import './DashboardPage.scss'
 import { connect } from 'react-redux'
 import { getCurrentUserProfile } from '../../ducks/profile/profileActions'
 import { isLoadingSelector, userProfileSelector } from '../../ducks/profile/profileSelectors'
 import Spinner from '../../components/Shared/Spinner/Spinner'
+import { userSelector } from '../../ducks/auth/authSelectors'
+import { load } from '../../utils/lazyLoadSingleComponent/lazyLoadSingleComponent'
 
-const DashboardPage = ({ getCurrentUserProfile, userProfile, isLoading }) => {
+const Experience = load(lazy(() => import('../../components/Dashboard/Experience/Experience')))
+const Education = load(lazy(() => import('../../components/Dashboard/Education/Education')))
+
+const DashboardPage = ({ getCurrentUserProfile, userProfile, isLoading, user }) => {
   useEffect(() => {
     getCurrentUserProfile()
-  }, [])
+  }, [getCurrentUserProfile])
 
-  if (isLoading) return <Spinner />
+  if (isLoading || !user) return <Spinner />
 
   return (
     <section className="container">
       <h1 className="large text-primary">Dashboard</h1>
       <p className="lead">
-        <i className="fas fa-user"></i> Welcome Alexander Bryksin
+        <i className="fas fa-user"></i> Welcome {user && user.name}
       </p>
       <div className="dash-buttons">
         <a href="create-profile.html" className="btn btn-light">
@@ -30,57 +35,9 @@ const DashboardPage = ({ getCurrentUserProfile, userProfile, isLoading }) => {
         </a>
       </div>
 
-      <h2 className="my-2">Experience Credentials</h2>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Company</th>
-            <th className="hide-sm">Title</th>
-            <th className="hide-sm">Years</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Google</td>
-            <td className="hide-sm">Senior Developer</td>
-            <td className="hide-sm">02-03-2017 - 01-01-2019</td>
-            <td>
-              <button className="btn btn-danger">Delete</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Facebook</td>
-            <td className="hide-sm">Senior Developer</td>
-            <td className="hide-sm">01-01-2019- Now</td>
-            <td>
-              <button className="btn btn-danger">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      {userProfile && <Experience experience={userProfile.experience} />}
 
-      <h2 className="my-2">Education Credentials</h2>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>School</th>
-            <th className="hide-sm">Degree</th>
-            <th className="hide-sm">Years</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Moscow MADI</td>
-            <td className="hide-sm">Software Engineer</td>
-            <td className="hide-sm">01-08-2005 - 01-06-2010</td>
-            <td>
-              <button className="btn btn-danger">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      {userProfile && <Education education={userProfile.education} />}
 
       <div className="my-2">
         <button className="btn btn-danger">
@@ -95,7 +52,12 @@ const DashboardPage = ({ getCurrentUserProfile, userProfile, isLoading }) => {
 export default connect(
   (state) => ({
     userProfile: userProfileSelector(state),
-    isLoading: isLoadingSelector(state)
+    isLoading: isLoadingSelector(state),
+    user: userSelector(state)
   }),
   { getCurrentUserProfile }
 )(DashboardPage)
+
+//
+// const Projects = load(lazy(() => import("pages/Projects")));
+// const Project = load(lazy(() => import("pages/Project")));
