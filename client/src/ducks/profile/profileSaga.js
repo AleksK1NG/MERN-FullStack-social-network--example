@@ -143,8 +143,8 @@ export function* addExperienceSaga(action) {
 export function* deleteProfileSaga() {
 
   try {
-    const data = yield call(api.deleteProfile)
-    debugger
+    yield call(api.deleteProfile)
+
     yield put({
       type: DELETE_PROFILE_SUCCESS
     })
