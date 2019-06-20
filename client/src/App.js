@@ -16,7 +16,7 @@ const Routes = React.lazy(() => import('./routes/routes'))
 const App = ({ loadUser }) => {
   useEffect(() => {
     loadUser()
-  }, [])
+  }, [loadUser])
 
   return (
     <Fragment>

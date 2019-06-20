@@ -1,4 +1,4 @@
-import React, { useEffect, lazy, Suspense } from 'react'
+import React, { useEffect, lazy } from 'react'
 import './DashboardPage.scss'
 import { connect } from 'react-redux'
 import { getCurrentUserProfile } from '../../ducks/profile/profileActions'
@@ -58,6 +58,3 @@ export default connect(
   { getCurrentUserProfile }
 )(DashboardPage)
 
-//
-// const Projects = load(lazy(() => import("pages/Projects")));
-// const Project = load(lazy(() => import("pages/Project")));
