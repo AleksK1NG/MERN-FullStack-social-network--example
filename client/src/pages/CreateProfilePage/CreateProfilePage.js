@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, Fragment } from 'react'
 import { Field, Form } from 'react-final-form'
 import './CreateProfilePage.scss'
 
@@ -16,6 +16,8 @@ const categories = [
 ]
 
 const CreateProfilePage = () => {
+  const [showSocialInputs, setShowSocialInputs] = useState(false)
+
   const onSubmit = (values, formApi) => {
     console.log('Create Profile form =>', values)
     // registerUser(newUser)
@@ -116,61 +118,65 @@ const CreateProfilePage = () => {
             </Field>
 
             <div className="my-2">
-              <button type="button" className="btn btn-light">
+              <button type="button" className="btn btn-light" onClick={() => setShowSocialInputs(!showSocialInputs)}>
                 Add Social Network Links
               </button>
               <span>Optional</span>
             </div>
 
-            <Field name="twitter" component="input" type="text" label="Twitter URL">
-              {({ input, meta }) => (
-                <div className="form-group social-input">
-                  <i className="fab fa-twitter fa-2x"></i>
-                  <input type="text" {...input} placeholder="Twitter URL" />
-                  {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
-                </div>
-              )}
-            </Field>
+            {showSocialInputs && (
+              <Fragment>
+                <Field name="twitter" component="input" type="text" label="Twitter URL">
+                  {({ input, meta }) => (
+                    <div className="form-group social-input">
+                      <i className="fab fa-twitter fa-2x"></i>
+                      <input type="text" {...input} placeholder="Twitter URL" />
+                      {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
+                    </div>
+                  )}
+                </Field>
 
-            <Field name="facebook" component="input" type="text" label="Facebook URL">
-              {({ input, meta }) => (
-                <div className="form-group social-input">
-                  <i className="fab fa-facebook fa-2x"></i>
-                  <input type="text" {...input} placeholder="Facebook URL" />
-                  {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
-                </div>
-              )}
-            </Field>
+                <Field name="facebook" component="input" type="text" label="Facebook URL">
+                  {({ input, meta }) => (
+                    <div className="form-group social-input">
+                      <i className="fab fa-facebook fa-2x"></i>
+                      <input type="text" {...input} placeholder="Facebook URL" />
+                      {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
+                    </div>
+                  )}
+                </Field>
 
-            <Field name="youtube" component="input" type="text" label="YouTube URL">
-              {({ input, meta }) => (
-                <div className="form-group social-input">
-                  <i className="fab fa-youtube fa-2x"></i>
-                  <input type="text" {...input} placeholder="YouTube URL" />
-                  {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
-                </div>
-              )}
-            </Field>
+                <Field name="youtube" component="input" type="text" label="YouTube URL">
+                  {({ input, meta }) => (
+                    <div className="form-group social-input">
+                      <i className="fab fa-youtube fa-2x"></i>
+                      <input type="text" {...input} placeholder="YouTube URL" />
+                      {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
+                    </div>
+                  )}
+                </Field>
 
-            <Field name="linkedin" component="input" type="text" label="Linkedin URL">
-              {({ input, meta }) => (
-                <div className="form-group social-input">
-                  <i className="fab fa-linkedin fa-2x"></i>
-                  <input type="text" {...input} placeholder="Linkedin URL" />
-                  {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
-                </div>
-              )}
-            </Field>
+                <Field name="linkedin" component="input" type="text" label="Linkedin URL">
+                  {({ input, meta }) => (
+                    <div className="form-group social-input">
+                      <i className="fab fa-linkedin fa-2x"></i>
+                      <input type="text" {...input} placeholder="Linkedin URL" />
+                      {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
+                    </div>
+                  )}
+                </Field>
 
-            <Field name="instagram" component="input" type="text" label="Instagram URL">
-              {({ input, meta }) => (
-                <div className="form-group social-input">
-                  <i className="fab fa-instagram fa-2x"></i>
-                  <input type="text" {...input} placeholder="Instagram URL" />
-                  {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
-                </div>
-              )}
-            </Field>
+                <Field name="instagram" component="input" type="text" label="Instagram URL">
+                  {({ input, meta }) => (
+                    <div className="form-group social-input">
+                      <i className="fab fa-instagram fa-2x"></i>
+                      <input type="text" {...input} placeholder="Instagram URL" />
+                      {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
+                    </div>
+                  )}
+                </Field>
+              </Fragment>
+            )}
 
             <input type="submit" className="btn btn-primary my-1" />
             <a className="btn btn-light my-1" href="dashboard.html">
