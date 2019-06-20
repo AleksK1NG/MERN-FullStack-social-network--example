@@ -1,6 +1,9 @@
 import React, { useState, Fragment } from 'react'
+import {connect} from 'react-redux'
 import { Field, Form } from 'react-final-form'
 import './CreateProfilePage.scss'
+import { validateCreateProfileForm } from '../../utils/finalFormValidators/validateCreateProfileForm'
+import { createUserProfile } from '../../ducks/profile/profileActions'
 
 const categories = [
   'Developer',
@@ -15,14 +18,13 @@ const categories = [
   'Other'
 ]
 
-const CreateProfilePage = () => {
+const CreateProfilePage = ({createUserProfile}) => {
   const [showSocialInputs, setShowSocialInputs] = useState(false)
 
   const onSubmit = (values, formApi) => {
-    console.log('Create Profile form =>', values)
-    // registerUser(newUser)
+    createUserProfile(values)
 
-    // formApi.reset()
+    formApi.reset()
   }
 
   return (
@@ -34,6 +36,7 @@ const CreateProfilePage = () => {
       <small>* = required field</small>
 
       <Form
+        validate={validateCreateProfileForm}
         onSubmit={onSubmit}
         render={({ handleSubmit, pristine, invalid }) => (
           <form onSubmit={handleSubmit} className="form">
@@ -178,7 +181,7 @@ const CreateProfilePage = () => {
               </Fragment>
             )}
 
-            <input type="submit" className="btn btn-primary my-1" />
+            <input type="submit" className="btn btn-primary my-1" disabled={pristine || invalid}/>
             <a className="btn btn-light my-1" href="dashboard.html">
               Go Back
             </a>
@@ -189,4 +192,4 @@ const CreateProfilePage = () => {
   )
 }
 
-export default CreateProfilePage
+export default connect(null, {createUserProfile})(CreateProfilePage)

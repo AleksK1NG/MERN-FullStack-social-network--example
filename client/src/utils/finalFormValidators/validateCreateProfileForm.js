@@ -11,9 +11,9 @@ export const validateCreateProfileForm = (values) => {
     errors.skills = 'Skills is required !';
   }
 
-  if (values.email && !emailIsValid(values.email)) {
-    errors.email = 'Invalid email !';
-  }
+  // if (values.email && !emailIsValid(values.email)) {
+  //   errors.email = 'Invalid email !';
+  // }
 
   // if (values.avatar && !checkURL(values.avatar)) {
   //   errors.avatar = 'Invalid avatar URL !';

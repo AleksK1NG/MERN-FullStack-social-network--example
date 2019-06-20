@@ -51,13 +51,15 @@ export function* createUserProfileSaga(action) {
     payload: { profileData }
   } = action;
 
+
   try {
-    const { data } = yield call(api.createAndUpdateUserProfile, profileData);
+    const { data } = yield call(api.createUserProfile, profileData);
 
     yield put({
       type: CREATE_PROFILE_SUCCESS,
       payload: { data }
     });
+
     toast.success('Success ! =D');
   } catch (error) {
     console.log(error);

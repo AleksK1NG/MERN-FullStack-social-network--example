@@ -9,6 +9,7 @@ const LOGIN_URL = '/api/auth/login'
 const CURRENT_USER_PROFILE_URL = '/api/v1/profile/me'
 const PROFILES_URL = '/api/profile'
 const USER_PROFILE_URL = '/api/v1/profile/user'
+const PROFILE_URL = '/api/v1/profile'
 const GITHUB_REPOS_API_URL = '/api/profile/github'
 const PROFILE_EXPERIENCE_URL = '/api/profile/experience'
 const PROFILE_EDUCATION_URL = '/api/profile/education'
@@ -75,6 +76,16 @@ class ApiService {
     }
 
     return axiosInstance.post(PROFILES_URL, profileData, config)
+  }
+
+  createUserProfile(profileData) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    return axiosInstance.post(PROFILE_URL, profileData, config)
   }
 
   addExperience(formData) {
