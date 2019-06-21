@@ -23,6 +23,12 @@ const ProfilePage = ({ profile, isLoading, repos, getProfileById, match, profile
         Back To Profiles
       </Link>
 
+      {profileOwner && (
+        <Link to="/edit-profile" className="btn btn-dark">
+          Edit Profile
+        </Link>
+      )}
+
       <div className="profile-grid my-1">
         <div className="profile-top bg-primary p-2">
           <img
