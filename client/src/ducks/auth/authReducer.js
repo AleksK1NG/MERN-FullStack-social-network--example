@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable'
 import {
-  LOAD_USER_ERROR,
+  LOAD_USER_ERROR, LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   SIGN_IN_ERROR,
   SIGN_IN_REQUEST,
@@ -32,6 +32,7 @@ export default function reducer(state = ReducerRecord, action) {
     case UPDATE_USER_REQUEST:
     case SIGN_IN_REQUEST:
     case SIGN_UP_REQUEST:
+    case LOAD_USER_REQUEST:
       return state.set('isLoading', true)
 
     case SIGN_UP_SUCCESS:

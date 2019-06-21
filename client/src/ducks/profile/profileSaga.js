@@ -139,7 +139,7 @@ export function* addExperienceSaga(action) {
       type: ADD_EXPERIENCE_SUCCESS,
       payload: { data }
     })
-
+    debugger
     toast.success('Success ! =D')
     yield put(replace('/dashboard'))
   } catch (error) {
@@ -165,7 +165,7 @@ export function* deleteExperienceSaga(action) {
       payload: { data, expId }
     })
 
-    toast.success('Success ! =D')
+    toast.success('Experience deleted !')
     yield put(replace('/dashboard'))
   } catch (error) {
     yield put({
@@ -190,7 +190,7 @@ export function* deleteEducationSaga(action) {
       payload: { eduId, data }
     })
 
-    toast.success('Success ! =D')
+    toast.success('Education deleted !')
     yield put(replace('/dashboard'))
   } catch (error) {
     yield put({

@@ -113,16 +113,17 @@ export function* logoutSaga() {
     yield put({
       type: CLEAR_PROFILE_SUCCESS
     })
+
     localStorage.removeItem('mern-dev')
     toast.warn('You are logged out')
     yield put(replace('/'))
   } catch (error) {
-    console.log(error)
     localStorage.removeItem('mern-dev')
     yield put({
       type: SIGN_OUT_ERROR,
       payload: { error }
     })
+    console.error(error)
   }
 }
 
@@ -137,16 +138,16 @@ export function* updateUserSaga(action) {
       type: UPDATE_USER_SUCCESS,
       payload: { data }
     })
-    debugger
+
     yield put(replace('/profile'))
-    // toast.success('Your profile successfully has been updated =D');
+    toast.success('Your profile successfully has been updated =D');
   } catch (error) {
-    console.log(error)
     yield put({
       type: UPDATE_USER_ERROR,
       payload: { error }
     })
-    // toast.error(rejectError(error));
+    console.error(error)
+    toast.error(rejectError(error));
   }
 }
 
