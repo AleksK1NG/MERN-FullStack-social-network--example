@@ -9,6 +9,7 @@ const CreateProfilePage = React.lazy(() => import('../pages/CreateProfilePage/Cr
 const EditProfilePage = React.lazy(() => import('../pages/EditProfilePage/EditProfilePage'))
 const AddEducationPage = React.lazy(() => import('../pages/AddEducationPage/AddEducationPage'))
 const AddExperiencePage = React.lazy(() => import('../pages/AddExperiencePage/AddExperiencePage'))
+const ProfilePage = React.lazy(() => import('../pages/ProfilePage/ProfilePage'))
 
 const Routes = () => {
   return (
@@ -21,6 +22,7 @@ const Routes = () => {
         <ProtectedRoute exact path="/edit-profile" component={EditProfilePage} />
         <ProtectedRoute exact path="/add-education" component={AddEducationPage} />
         <ProtectedRoute exact path="/add-experience" component={AddExperiencePage} />
+        <ProtectedRoute exact path="/profile" component={ProfilePage} />
       </Switch>
     </section>
   )
