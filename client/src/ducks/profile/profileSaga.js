@@ -232,7 +232,6 @@ export function* getAllProfilesSaga() {
       payload: { data }
     })
 
-    debugger
   } catch (error) {
     yield put({
       type: GET_PROFILES_ERROR,

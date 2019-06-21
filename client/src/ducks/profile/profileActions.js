@@ -15,7 +15,7 @@ import {
   UPDATE_PROFILE_REQUEST
 } from './profileConstants'
 
-export const getProfiles = () => {
+export const getAllProfiles = () => {
   return {
     type: GET_PROFILES_REQUEST
   }
