@@ -107,6 +107,7 @@ export function* addEducationSaga(action) {
       payload: { data }
     })
     toast.success('Success ! =D')
+    yield put(replace('/dashboard'))
   } catch (error) {
     console.error(error)
     yield put({
@@ -130,6 +131,7 @@ export function* addExperienceSaga(action) {
       payload: { data }
     })
     toast.success('Success ! =D')
+    yield put(replace('/dashboard'))
   } catch (error) {
     console.error(error)
     yield put({

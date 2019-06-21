@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Form, Field } from 'react-final-form'
 import { validateAddExperienceForm } from '../../utils/finalFormValidators/validateAddExperienceForm'
+import { addExperience } from '../../ducks/profile/profileActions'
 
-const AddExperiencePage = () => {
+const AddExperiencePage = ({ addExperience }) => {
   const [disableDate, setDisableDate] = useState(false)
   const onSubmit = (values, formApi) => {
-    // createUserProfile(values)
     console.log(' Add education values => ', values)
+    addExperience(values)
     formApi.reset()
   }
 
@@ -20,6 +22,7 @@ const AddExperiencePage = () => {
       <small>* = required field</small>
 
       <Form
+        initialValues={{ current: false }}
         validate={validateAddExperienceForm}
         onSubmit={onSubmit}
         render={({ handleSubmit, pristine, invalid }) => (
@@ -61,11 +64,14 @@ const AddExperiencePage = () => {
               )}
             </Field>
 
-            <div className="form-group">
-              <p>
-                <input type="checkbox" name="current" value="" onChange={() => setDisableDate(!disableDate)} /> Current Job
-              </p>
-            </div>
+            <Field name="current" component="input" type="checkbox" label="to">
+              {({ input, meta }) => (
+                <p onClick={() => setDisableDate(!disableDate)}>
+                  <input checked={disableDate} type="checkbox" {...input} /> Current Job
+                  {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
+                </p>
+              )}
+            </Field>
 
             {!disableDate && (
               <Field name="to" component="input" type="date" label="to">
@@ -99,4 +105,7 @@ const AddExperiencePage = () => {
   )
 }
 
-export default AddExperiencePage
+export default connect(
+  null,
+  { addExperience }
+)(AddExperiencePage)

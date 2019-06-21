@@ -11,8 +11,8 @@ const PROFILES_URL = '/api/profile'
 const USER_PROFILE_URL = '/api/v1/profile/user'
 const PROFILE_URL = '/api/v1/profile'
 const GITHUB_REPOS_API_URL = '/api/profile/github'
-const PROFILE_EXPERIENCE_URL = '/api/profile/experience'
-const PROFILE_EDUCATION_URL = '/api/profile/education'
+const PROFILE_EXPERIENCE_URL = '/api/v1/profile/experience'
+const PROFILE_EDUCATION_URL = '/api/v1/profile/education'
 
 const USER_REGISTER_URL = '/api/v1/auth/register'
 const USER_LOGIN_URL = '/api/v1/auth/login'
@@ -105,7 +105,7 @@ class ApiService {
       }
     }
 
-    return axios.put(PROFILE_EXPERIENCE_URL, formData, config)
+    return axiosInstance.put(PROFILE_EXPERIENCE_URL, formData, config)
   }
 
   addEducation(formData) {
@@ -115,7 +115,7 @@ class ApiService {
       }
     }
 
-    return axios.put(PROFILE_EDUCATION_URL, formData, config)
+    return axiosInstance.put(PROFILE_EDUCATION_URL, formData, config)
   }
 
   deleteProfile() {

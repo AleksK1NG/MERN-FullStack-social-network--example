@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Field, Form } from 'react-final-form'
 import { validateAddEducationForm } from '../../utils/finalFormValidators/validateAddEducationForm'
+import { addEducation } from '../../ducks/profile/profileActions'
 
-const AddEducationPage = () => {
+const AddEducationPage = ({ addEducation }) => {
   const [disableDate, setDisableDate] = useState(false)
 
   const onSubmit = (values, formApi) => {
-    // createUserProfile(values)
+    addEducation(values)
     console.log(' Add education values => ', values)
     formApi.reset()
   }
@@ -21,6 +23,7 @@ const AddEducationPage = () => {
       <small>* = required field</small>
 
       <Form
+        initialValues={{current: false}}
         validate={validateAddEducationForm}
         onSubmit={onSubmit}
         render={({ handleSubmit, pristine, invalid }) => (
@@ -62,12 +65,21 @@ const AddEducationPage = () => {
               )}
             </Field>
 
-            <div className="form-group">
-              <p>
-                <input type="checkbox" name="current" value="" onChange={() => setDisableDate(!disableDate)} /> Current
-                School or Bootcamp
-              </p>
-            </div>
+
+              <Field name="current" component="input" type="checkbox" label="to">
+                {({ input, meta }) => (
+                  <p onClick={() => setDisableDate(!disableDate)}>
+                    <input
+                      checked={disableDate}
+                      type="checkbox"
+                      {...input}
+                    />{' '}
+                    Current School or Bootcamp
+                    {meta.touched && meta.error && <span className="help is-danger">{meta.error}</span>}
+                  </p>
+                )}
+              </Field>
+
             {!disableDate && (
               <Field name="to" component="input" type="date" label="to">
                 {({ input, meta }) => (
@@ -100,4 +112,7 @@ const AddEducationPage = () => {
   )
 }
 
-export default AddEducationPage
+export default connect(
+  null,
+  { addEducation }
+)(AddEducationPage)
