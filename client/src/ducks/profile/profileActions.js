@@ -5,6 +5,8 @@ import {
   ADD_EDUCATION_REQUEST,
   ADD_EXPERIENCE_REQUEST,
   CREATE_PROFILE_REQUEST,
+  DELETE_EDUCATION_REQUEST,
+  DELETE_EXPERIENCE_REQUEST,
   DELETE_PROFILE_REQUEST,
   GET_CURRENT_PROFILE_REQUEST,
   GET_PROFILE_BY_ID_REQUEST,
@@ -64,6 +66,20 @@ export const addExperience = (expData) => {
   return {
     type: ADD_EXPERIENCE_REQUEST,
     payload: { expData }
+  }
+}
+
+export const deleteEducation = (eduId) => {
+  return {
+    type: DELETE_EDUCATION_REQUEST,
+    payload: { eduId }
+  }
+}
+
+export const deleteExperience = (expId) => {
+  return {
+    type: DELETE_EXPERIENCE_REQUEST,
+    payload: { expId }
   }
 }
 

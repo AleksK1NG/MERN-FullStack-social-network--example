@@ -11,6 +11,10 @@ import {
   CREATE_PROFILE_ERROR,
   CREATE_PROFILE_REQUEST,
   CREATE_PROFILE_SUCCESS,
+  DELETE_EDUCATION_ERROR,
+  DELETE_EDUCATION_SUCCESS,
+  DELETE_EXPERIENCE_ERROR,
+  DELETE_EXPERIENCE_SUCCESS,
   DELETE_PROFILE_ERROR,
   DELETE_PROFILE_SUCCESS,
   GET_CURRENT_PROFILE_ERROR,
@@ -91,6 +95,8 @@ export default function reducer(state = ReducerRecord, action) {
         .set('isLoading', false)
         .set('user', null)
 
+    case DELETE_EDUCATION_ERROR:
+    case DELETE_EXPERIENCE_ERROR:
     case DELETE_PROFILE_ERROR:
     case GET_PROFILE_BY_ID_ERROR:
     case GET_PROFILES_ERROR:
@@ -111,6 +117,20 @@ export default function reducer(state = ReducerRecord, action) {
     case DELETE_PROFILE_SUCCESS:
       return state
         .set('profile', null)
+        .set('error', null)
+        .set('isLoading', false)
+
+    case DELETE_EDUCATION_SUCCESS:
+      return state
+        .updateIn(['profile', 'education'], (education) => education.filter((edu) => edu.get('_id') !== payload.eduId))
+        .set('error', null)
+        .set('isLoading', false)
+
+    case DELETE_EXPERIENCE_SUCCESS:
+      return state
+        .updateIn(['profile', 'experience'], (experience) =>
+          experience.filter((exp) => exp.get('_id') !== payload.expId)
+        )
         .set('error', null)
         .set('isLoading', false)
 

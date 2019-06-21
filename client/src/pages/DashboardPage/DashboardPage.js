@@ -1,7 +1,12 @@
 import React, { useEffect, lazy, Fragment } from 'react'
 import './DashboardPage.scss'
 import { connect } from 'react-redux'
-import { deleteProfile, getCurrentUserProfile } from '../../ducks/profile/profileActions'
+import {
+  deleteEducation,
+  deleteExperience,
+  deleteProfile,
+  getCurrentUserProfile
+} from '../../ducks/profile/profileActions'
 import { isLoadingSelector, userProfileSelector } from '../../ducks/profile/profileSelectors'
 import Spinner from '../../components/Shared/Spinner/Spinner'
 import { userSelector } from '../../ducks/auth/authSelectors'
@@ -12,7 +17,7 @@ import { Link } from 'react-router-dom'
 const Experience = load(lazy(() => import('../../components/Dashboard/Experience/Experience')))
 const Education = load(lazy(() => import('../../components/Dashboard/Education/Education')))
 
-const DashboardPage = ({ getCurrentUserProfile, userProfile, isLoading, user, deleteProfile }) => {
+const DashboardPage = ({ getCurrentUserProfile, userProfile, isLoading, user, deleteProfile, deleteExperience, deleteEducation }) => {
   useEffect(() => {
     getCurrentUserProfile()
   }, [getCurrentUserProfile])
@@ -29,8 +34,8 @@ const DashboardPage = ({ getCurrentUserProfile, userProfile, isLoading, user, de
       {userProfile ? (
         <Fragment>
           <DashboardActions />
-          <Experience experience={userProfile.experience} />
-          <Education education={userProfile.education} />
+          <Experience experience={userProfile.experience} deleteExperience={deleteExperience} />
+          <Education education={userProfile.education} deleteEducation={deleteEducation} />
 
           <div className="my-2">
             <button className="btn btn-danger" onClick={deleteProfile}>
@@ -57,5 +62,5 @@ export default connect(
     isLoading: isLoadingSelector(state),
     user: userSelector(state)
   }),
-  { getCurrentUserProfile, deleteProfile }
+  { getCurrentUserProfile, deleteProfile, deleteExperience, deleteEducation }
 )(DashboardPage)

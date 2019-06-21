@@ -118,6 +118,28 @@ class ApiService {
     return axiosInstance.put(PROFILE_EDUCATION_URL, formData, config)
   }
 
+  deleteEducation(eduId) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    return axiosInstance.delete(`${PROFILE_EDUCATION_URL}/${eduId}`, config)
+  }
+
+  deleteExperience(expId) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    return axiosInstance.delete(`${PROFILE_EXPERIENCE_URL}/${expId}`, config)
+  }
+
+
+
   deleteProfile() {
     const config = {
       headers: {

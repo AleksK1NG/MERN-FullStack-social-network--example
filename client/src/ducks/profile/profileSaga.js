@@ -14,7 +14,15 @@ import {
   ADD_EXPERIENCE_SUCCESS,
   CREATE_PROFILE_ERROR,
   CREATE_PROFILE_REQUEST,
-  CREATE_PROFILE_SUCCESS, DELETE_PROFILE_REQUEST, DELETE_PROFILE_SUCCESS,
+  CREATE_PROFILE_SUCCESS,
+  DELETE_EDUCATION_ERROR,
+  DELETE_EDUCATION_REQUEST,
+  DELETE_EDUCATION_SUCCESS,
+  DELETE_EXPERIENCE_ERROR,
+  DELETE_EXPERIENCE_REQUEST,
+  DELETE_EXPERIENCE_SUCCESS,
+  DELETE_PROFILE_REQUEST,
+  DELETE_PROFILE_SUCCESS,
   GET_CURRENT_PROFILE_ERROR,
   GET_CURRENT_PROFILE_REQUEST,
   GET_CURRENT_PROFILE_SUCCESS,
@@ -98,22 +106,23 @@ export function* addEducationSaga(action) {
   const {
     payload: { eduData }
   } = action
-  debugger
+
   try {
     const { data } = yield call(api.addEducation, eduData)
-    debugger
+
     yield put({
       type: ADD_EDUCATION_SUCCESS,
       payload: { data }
     })
+
     toast.success('Success ! =D')
     yield put(replace('/dashboard'))
   } catch (error) {
-    console.error(error)
     yield put({
       type: ADD_EDUCATION_ERROR,
       payload: { error }
     })
+    console.error(error)
     toast.error(rejectError(error))
   }
 }
@@ -122,46 +131,96 @@ export function* addExperienceSaga(action) {
   const {
     payload: { expData }
   } = action
-  debugger
+
   try {
     const { data } = yield call(api.addExperience, expData)
-    debugger
+
     yield put({
       type: ADD_EXPERIENCE_SUCCESS,
       payload: { data }
     })
+
     toast.success('Success ! =D')
     yield put(replace('/dashboard'))
   } catch (error) {
-    console.error(error)
     yield put({
       type: ADD_EXPERIENCE_ERROR,
       payload: { error }
     })
+    console.error(error)
+    toast.error(rejectError(error))
+  }
+}
+
+export function* deleteExperienceSaga(action) {
+  const {
+    payload: { expId }
+  } = action
+
+  try {
+    const { data } = yield call(api.deleteExperience, expId)
+
+    yield put({
+      type: DELETE_EXPERIENCE_SUCCESS,
+      payload: { data, expId }
+    })
+
+    toast.success('Success ! =D')
+    yield put(replace('/dashboard'))
+  } catch (error) {
+    yield put({
+      type: DELETE_EXPERIENCE_ERROR,
+      payload: { error }
+    })
+    console.error(error)
+    toast.error(rejectError(error))
+  }
+}
+
+export function* deleteEducationSaga(action) {
+  const {
+    payload: { eduId }
+  } = action
+
+  try {
+    const { data } = yield call(api.deleteEducation, eduId)
+
+    yield put({
+      type: DELETE_EDUCATION_SUCCESS,
+      payload: { eduId, data }
+    })
+
+    toast.success('Success ! =D')
+    yield put(replace('/dashboard'))
+  } catch (error) {
+    yield put({
+      type: DELETE_EDUCATION_ERROR,
+      payload: { error }
+    })
+    console.error(error)
     toast.error(rejectError(error))
   }
 }
 
 export function* deleteProfileSaga() {
-
   try {
     yield call(api.deleteProfile)
 
     yield put({
       type: DELETE_PROFILE_SUCCESS
     })
+
     toast.success('Profile was deleted !')
     yield put(replace('/'))
   } catch (error) {
-    console.error(error)
     yield put({
       type: ADD_EXPERIENCE_ERROR,
       payload: { error }
     })
+    console.error(error)
     toast.error(rejectError(error))
   }
 }
-
 
 export function* saga() {
   yield all([
@@ -171,5 +230,7 @@ export function* saga() {
     takeEvery(ADD_EDUCATION_REQUEST, addEducationSaga),
     takeEvery(ADD_EXPERIENCE_REQUEST, addExperienceSaga),
     takeEvery(DELETE_PROFILE_REQUEST, deleteProfileSaga),
+    takeEvery(DELETE_EXPERIENCE_REQUEST, deleteExperienceSaga),
+    takeEvery(DELETE_EDUCATION_REQUEST, deleteEducationSaga)
   ])
 }
