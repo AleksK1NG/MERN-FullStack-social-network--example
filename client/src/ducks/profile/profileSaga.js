@@ -25,7 +25,13 @@ import {
   DELETE_PROFILE_SUCCESS,
   GET_CURRENT_PROFILE_ERROR,
   GET_CURRENT_PROFILE_REQUEST,
-  GET_CURRENT_PROFILE_SUCCESS, GET_PROFILES_ERROR, GET_PROFILES_REQUEST, GET_PROFILES_SUCCESS,
+  GET_CURRENT_PROFILE_SUCCESS,
+  GET_PROFILE_BY_ID_ERROR,
+  GET_PROFILE_BY_ID_REQUEST,
+  GET_PROFILE_BY_ID_SUCCESS,
+  GET_PROFILES_ERROR,
+  GET_PROFILES_REQUEST,
+  GET_PROFILES_SUCCESS,
   UPDATE_PROFILE_ERROR,
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS
@@ -222,7 +228,6 @@ export function* deleteProfileSaga() {
   }
 }
 
-
 export function* getAllProfilesSaga() {
   try {
     const { data } = yield call(api.getAllUsersProfiles)
@@ -231,7 +236,6 @@ export function* getAllProfilesSaga() {
       type: GET_PROFILES_SUCCESS,
       payload: { data }
     })
-
   } catch (error) {
     yield put({
       type: GET_PROFILES_ERROR,
@@ -241,7 +245,25 @@ export function* getAllProfilesSaga() {
   }
 }
 
+export function* getProfileByIdSaga(action) {
+  const { payload } = action
 
+  try {
+    const { data } = yield call(api.getUserProfileById, payload.profileId)
+
+    yield put({
+      type: GET_PROFILE_BY_ID_SUCCESS,
+      payload: { data }
+    })
+
+  } catch (error) {
+    yield put({
+      type: GET_PROFILE_BY_ID_ERROR,
+      payload: { error }
+    })
+    console.error(error)
+  }
+}
 
 export function* saga() {
   yield all([
@@ -254,5 +276,6 @@ export function* saga() {
     takeEvery(DELETE_EXPERIENCE_REQUEST, deleteExperienceSaga),
     takeEvery(DELETE_EDUCATION_REQUEST, deleteEducationSaga),
     takeEvery(GET_PROFILES_REQUEST, getAllProfilesSaga),
+    takeEvery(GET_PROFILE_BY_ID_REQUEST, getProfileByIdSaga)
   ])
 }

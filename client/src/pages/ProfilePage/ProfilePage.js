@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { isLoadingSelector, reposSelector, userProfileSelector } from '../../ducks/profile/profileSelectors'
+import { getProfileById } from '../../ducks/profile/profileActions'
+import Spinner from '../../components/Shared/Spinner/Spinner'
 
-const ProfilePage = ({ profile, isLoading, repos }) => {
+const ProfilePage = ({ profile, isLoading, repos, getProfileById, match }) => {
+  useEffect(() => {
+    getProfileById(match.params.id)
+  }, [getProfileById])
+
+  if (isLoading || !profile) return <Spinner />
+
   return (
     <section className="container">
       <Link to="/profiles" className="btn btn-light">
@@ -166,5 +174,5 @@ export default connect(
     isLoading: isLoadingSelector(state),
     repos: reposSelector(state)
   }),
-  {}
+  { getProfileById }
 )(ProfilePage)

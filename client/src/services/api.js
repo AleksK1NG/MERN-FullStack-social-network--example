@@ -9,7 +9,7 @@ const LOGIN_URL = '/api/auth/login'
 const CURRENT_USER_PROFILE_URL = '/api/v1/profile/me'
 const PROFILES_URL = '/api/v1/profile'
 const USER_PROFILE_URL = '/api/v1/profile/user'
-const PROFILE_URL = '/api/v1/profile'
+const PROFILE_URL = '/api/v1/profile/user'
 const GITHUB_REPOS_API_URL = '/api/profile/github'
 const PROFILE_EXPERIENCE_URL = '/api/v1/profile/experience'
 const PROFILE_EDUCATION_URL = '/api/v1/profile/education'
@@ -152,6 +152,10 @@ class ApiService {
 
   getAllUsersProfiles() {
     return axios.get(PROFILES_URL)
+  }
+
+  getUserProfileById(profileId) {
+    return axios.get(`${PROFILE_URL}/${profileId}`)
   }
 
 }
