@@ -7,7 +7,7 @@ const USERS_URL = '/api/users'
 const AUTH_URL = '/api/auth/'
 const LOGIN_URL = '/api/auth/login'
 const CURRENT_USER_PROFILE_URL = '/api/v1/profile/me'
-const PROFILES_URL = '/api/profile'
+const PROFILES_URL = '/api/v1/profile'
 const USER_PROFILE_URL = '/api/v1/profile/user'
 const PROFILE_URL = '/api/v1/profile'
 const GITHUB_REPOS_API_URL = '/api/profile/github'
@@ -148,6 +148,10 @@ class ApiService {
     }
 
     return axiosInstance.delete(PROFILE_URL, config)
+  }
+
+  getAllUsersProfiles() {
+    return axios.get(PROFILES_URL)
   }
 
 }

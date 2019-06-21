@@ -25,7 +25,7 @@ import {
   DELETE_PROFILE_SUCCESS,
   GET_CURRENT_PROFILE_ERROR,
   GET_CURRENT_PROFILE_REQUEST,
-  GET_CURRENT_PROFILE_SUCCESS,
+  GET_CURRENT_PROFILE_SUCCESS, GET_PROFILES_ERROR, GET_PROFILES_REQUEST, GET_PROFILES_SUCCESS,
   UPDATE_PROFILE_ERROR,
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS
@@ -222,6 +222,28 @@ export function* deleteProfileSaga() {
   }
 }
 
+
+export function* getAllProfilesSaga() {
+  try {
+    const { data } = yield call(api.getAllUsersProfiles)
+
+    yield put({
+      type: GET_PROFILES_SUCCESS,
+      payload: { data }
+    })
+
+    debugger
+  } catch (error) {
+    yield put({
+      type: GET_PROFILES_ERROR,
+      payload: { error }
+    })
+    console.error(error)
+  }
+}
+
+
+
 export function* saga() {
   yield all([
     takeEvery(GET_CURRENT_PROFILE_REQUEST, getCurrentUserProfileSaga),
@@ -231,6 +253,7 @@ export function* saga() {
     takeEvery(ADD_EXPERIENCE_REQUEST, addExperienceSaga),
     takeEvery(DELETE_PROFILE_REQUEST, deleteProfileSaga),
     takeEvery(DELETE_EXPERIENCE_REQUEST, deleteExperienceSaga),
-    takeEvery(DELETE_EDUCATION_REQUEST, deleteEducationSaga)
+    takeEvery(DELETE_EDUCATION_REQUEST, deleteEducationSaga),
+    takeEvery(GET_PROFILES_REQUEST, getAllProfilesSaga),
   ])
 }

@@ -10,7 +10,7 @@ router.get('/me', authMiddleware, ProfilesController.getCurrentUserProfile)
 // @ GET Public api/v1/profile Get All Profiles
 router.get('/', ProfilesController.getAllUsersProfiles)
 
-// @ GET Public api/v1/profile Get All Profiles
+// @ GET Public api/v1/profile Get user profile by id
 router.get('/user/:id', ProfilesController.getProfileByUserId)
 
 // @ GET Public GitHub repos

@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { isLoadingSelector, reposSelector, userProfileSelector } from '../../ducks/profile/profileSelectors'
 
-const ProfilePage = () => {
+const ProfilePage = ({ profile, isLoading, repos }) => {
   return (
     <section className="container">
       <Link to="/profiles" className="btn btn-light">
@@ -160,6 +161,10 @@ const ProfilePage = () => {
 }
 
 export default connect(
-  (state) => ({}),
+  (state) => ({
+    profile: userProfileSelector(state),
+    isLoading: isLoadingSelector(state),
+    repos: reposSelector(state)
+  }),
   {}
 )(ProfilePage)
