@@ -27,7 +27,6 @@ const DashboardPage = ({
   deleteEducation,
   history
 }) => {
-  debugger
   useEffect(() => {
     getCurrentUserProfile()
   }, [getCurrentUserProfile])
@@ -41,8 +40,8 @@ const DashboardPage = ({
   return (
     <section className="container">
       <h1 className="large text-primary">Dashboard</h1>
-      <p className="lead">
-        <i className="fas fa-user" onClick={goToProfileHandler}></i> Welcome {user && user.name}
+      <p className="lead" style={{ cursor: 'pointer' }} onClick={goToProfileHandler}>
+        <i className="fas fa-user"></i> Welcome {user && user.name}
       </p>
 
       {userProfile ? (

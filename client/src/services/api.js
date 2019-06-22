@@ -3,9 +3,7 @@ import axios from 'axios'
  * Api Service
  * */
 
-const USERS_URL = '/api/users'
-const AUTH_URL = '/api/auth/'
-const LOGIN_URL = '/api/auth/login'
+
 const CURRENT_USER_PROFILE_URL = '/api/v1/profile/me'
 const PROFILES_URL = '/api/v1/profile'
 const USER_PROFILE_URL = '/api/v1/profile/user'
