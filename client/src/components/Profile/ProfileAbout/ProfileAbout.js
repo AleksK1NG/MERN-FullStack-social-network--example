@@ -1,11 +1,11 @@
 import React, { Fragment, memo } from 'react'
 
-const ProfileAbout = ({ profile }) => {
+const ProfileAbout = ({ profile, user }) => {
   return (
     <div className="profile-about bg-light p-2">
       {profile.bio && (
         <Fragment>
-          <h2 className="text-primary">{profile.githubusername}s Bio</h2>
+          {user.name && <h2 className="text-primary">{user.name}'s Bio</h2>}
           <p>{profile.bio}</p>
           <div className="line" />
         </Fragment>
