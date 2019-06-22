@@ -94,12 +94,12 @@ export function* loadUserSaga() {
       payload: { data }
     })
   } catch (error) {
-    console.error(error)
     localStorage.removeItem('mern-dev')
     yield put({
       type: LOAD_USER_ERROR,
       payload: { error }
     })
+    console.error(error)
   }
 }
 

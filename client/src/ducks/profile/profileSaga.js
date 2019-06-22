@@ -1,7 +1,7 @@
 import { replace } from 'connected-react-router'
 import { toast } from 'react-toastify'
 
-import { takeEvery, call, put, all, takeLatest } from 'redux-saga/effects'
+import { takeEvery, call, put, all } from 'redux-saga/effects'
 import { rejectError } from '../../utils/rejectErrorHelper'
 import api from '../../services/api'
 
@@ -39,7 +39,6 @@ import {
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS
 } from './profileConstants'
-import { getGithubRepos } from './profileActions'
 
 /**
  * Sagas
@@ -66,7 +65,7 @@ export function* createUserProfileSaga(action) {
   const {
     payload: { profileData }
   } = action
-
+  debugger
   try {
     const { data } = yield call(api.createUserProfile, profileData)
 
@@ -74,7 +73,7 @@ export function* createUserProfileSaga(action) {
       type: CREATE_PROFILE_SUCCESS,
       payload: { data }
     })
-
+    debugger
     toast.success('Success ! =D')
     yield put(replace('/dashboard'))
   } catch (error) {

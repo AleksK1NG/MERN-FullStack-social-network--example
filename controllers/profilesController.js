@@ -12,6 +12,8 @@ module.exports.getCurrentUserProfile = async (req, res) => {
     const profile = await Profile.findOne({ user: req.user.id }).populate('name', ['name', 'avatar', 'email'])
     if (!profile) return res.status(400).json({ errors: [{ msg: 'Not found profile for this user' }] })
 
+    console.log('GET CURRENT USER REQ USER => ', req.user)
+
     res.status(200).json(profile)
   } catch (error) {
     console.error(error.message)
@@ -21,6 +23,7 @@ module.exports.getCurrentUserProfile = async (req, res) => {
 
 // @ POST Create user profile
 module.exports.createUserProfile = async (req, res) => {
+  console.log('CREATE USER PROFILE REQ USER => ', req.user)
   const {
     company,
     website,
@@ -154,9 +157,12 @@ module.exports.getAllUsersProfiles = async (req, res) => {
 module.exports.getProfileByUserId = async (req, res) => {
   const userId = req.params.id
   try {
+    const user = await User.findById(userId)
+    if (!user) return res.status(400).json({ errors: [{ msg: 'Profile does not found' }] })
     const profile = await Profile.findOne({ user: userId })
     if (!profile) return res.status(400).json({ errors: [{ msg: 'Profile does not found' }] })
-
+    profile.user = user
+    console.log('Profile user => ', profile.user)
     res.status(200).json(profile)
   } catch (error) {
     console.error(error.message)

@@ -10,6 +10,7 @@ const CURRENT_USER_PROFILE_URL = '/api/v1/profile/me'
 const PROFILES_URL = '/api/v1/profile'
 const USER_PROFILE_URL = '/api/v1/profile/user'
 const PROFILE_URL = '/api/v1/profile/user'
+const CREATE_PROFILE_URL = '/api/v1/profile'
 const GITHUB_REPOS_API_URL = '/api/v1/profile/github'
 const PROFILE_EXPERIENCE_URL = '/api/v1/profile/experience'
 const PROFILE_EDUCATION_URL = '/api/v1/profile/education'
@@ -84,7 +85,7 @@ class ApiService {
       }
     }
 
-    return axiosInstance.post(PROFILE_URL, profileData, config)
+    return axiosInstance.post(PROFILES_URL, profileData, config)
   }
 
   updateUserProfile(profileData) {

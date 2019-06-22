@@ -23,8 +23,8 @@ const Routes = () => {
         <ProtectedRoute exact path="/edit-profile" component={EditProfilePage} />
         <ProtectedRoute exact path="/add-education" component={AddEducationPage} />
         <ProtectedRoute exact path="/add-experience" component={AddExperiencePage} />
-        <ProtectedRoute exact path="/profile/:id" component={ProfilePage} />
-        <ProtectedRoute exact path="/profiles" component={ProfilesPage} />
+        <Route exact path="/profile/:id" component={ProfilePage} />
+        <Route exact path="/profiles" component={ProfilesPage} />
       </Switch>
     </section>
   )
