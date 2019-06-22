@@ -32,6 +32,9 @@ import {
   GET_PROFILES_ERROR,
   GET_PROFILES_REQUEST,
   GET_PROFILES_SUCCESS,
+  GET_REPOS_ERROR,
+  GET_REPOS_REQUEST,
+  GET_REPOS_SUCCESS,
   UPDATE_PROFILE_ERROR,
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS
@@ -255,10 +258,29 @@ export function* getProfileByIdSaga(action) {
       type: GET_PROFILE_BY_ID_SUCCESS,
       payload: { data }
     })
-
   } catch (error) {
     yield put({
       type: GET_PROFILE_BY_ID_ERROR,
+      payload: { error }
+    })
+    console.error(error)
+  }
+}
+
+export function* getGitHubReposSaga(action) {
+  const { payload } = action
+
+  try {
+    const { data } = yield call(api.getGithubRepos, payload.username)
+
+    yield put({
+      type: GET_REPOS_SUCCESS,
+      payload: { data }
+    })
+    debugger
+  } catch (error) {
+    yield put({
+      type: GET_REPOS_ERROR,
       payload: { error }
     })
     console.error(error)
@@ -276,6 +298,7 @@ export function* saga() {
     takeEvery(DELETE_EXPERIENCE_REQUEST, deleteExperienceSaga),
     takeEvery(DELETE_EDUCATION_REQUEST, deleteEducationSaga),
     takeEvery(GET_PROFILES_REQUEST, getAllProfilesSaga),
-    takeEvery(GET_PROFILE_BY_ID_REQUEST, getProfileByIdSaga)
+    takeEvery(GET_PROFILE_BY_ID_REQUEST, getProfileByIdSaga),
+    takeEvery(GET_REPOS_REQUEST, getGitHubReposSaga)
   ])
 }

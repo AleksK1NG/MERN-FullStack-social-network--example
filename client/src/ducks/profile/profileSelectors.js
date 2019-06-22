@@ -38,7 +38,7 @@ export const reposSelector = createSelector(
 
 export const isCurrentUserProfileSelector = createSelector([userProfileSelector, userSelector], (profile, user) => {
   if (profile && user) {
-    debugger
     return profile.user === user._id
   }
+  return null
 })

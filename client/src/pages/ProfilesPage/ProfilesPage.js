@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { getAllProfiles } from '../../ducks/profile/profileActions'
 import { isLoadingSelector, userProfilesSelector } from '../../ducks/profile/profileSelectors'
 import Spinner from '../../components/Shared/Spinner/Spinner'
-import ProfileItem from '../../components/Profile/ProfileItem'
+import ProfileItem from '../../components/Profile/ProfileItem/ProfileItem'
 
 const ProfilesPage = ({ getAllProfiles, profiles, isLoading }) => {
   useEffect(() => {

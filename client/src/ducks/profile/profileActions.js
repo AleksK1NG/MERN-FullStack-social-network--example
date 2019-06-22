@@ -41,10 +41,10 @@ export const updateUserProfile = (profileData) => {
   }
 }
 
-export const getRepos = (githubId) => {
+export const getGithubRepos = (username) => {
   return {
     type: GET_REPOS_REQUEST,
-    payload: { githubId }
+    payload: { username }
   }
 }
 

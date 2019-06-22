@@ -10,7 +10,7 @@ const CURRENT_USER_PROFILE_URL = '/api/v1/profile/me'
 const PROFILES_URL = '/api/v1/profile'
 const USER_PROFILE_URL = '/api/v1/profile/user'
 const PROFILE_URL = '/api/v1/profile/user'
-const GITHUB_REPOS_API_URL = '/api/profile/github'
+const GITHUB_REPOS_API_URL = '/api/v1/profile/github'
 const PROFILE_EXPERIENCE_URL = '/api/v1/profile/experience'
 const PROFILE_EDUCATION_URL = '/api/v1/profile/education'
 
@@ -66,17 +66,16 @@ class ApiService {
   getCurrentUserProfile() {
     return axiosInstance.get(CURRENT_USER_PROFILE_URL)
   }
-
-  createAndUpdateUserProfile(profileData) {
-    debugger
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-
-    return axiosInstance.post(PROFILES_URL, profileData, config)
-  }
+  //
+  // createAndUpdateUserProfile(profileData) {
+  //   const config = {
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }
+  //
+  //   return axiosInstance.post(PROFILES_URL, profileData, config)
+  // }
 
   createUserProfile(profileData) {
     const config = {
@@ -138,8 +137,6 @@ class ApiService {
     return axiosInstance.delete(`${PROFILE_EXPERIENCE_URL}/${expId}`, config)
   }
 
-
-
   deleteProfile() {
     const config = {
       headers: {
@@ -158,6 +155,9 @@ class ApiService {
     return axios.get(`${PROFILE_URL}/${profileId}`)
   }
 
+  getGithubRepos(username) {
+    return axios.get(`${GITHUB_REPOS_API_URL}/${username}`)
+  }
 }
 
 export default new ApiService()
