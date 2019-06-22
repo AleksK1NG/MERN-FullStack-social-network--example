@@ -1,7 +1,7 @@
 import { replace } from 'connected-react-router'
 import { toast } from 'react-toastify'
 
-import { takeEvery, call, put, all } from 'redux-saga/effects'
+import { takeEvery, call, put, all, takeLatest } from 'redux-saga/effects'
 import { rejectError } from '../../utils/rejectErrorHelper'
 import api from '../../services/api'
 
@@ -39,6 +39,7 @@ import {
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS
 } from './profileConstants'
+import { getGithubRepos } from './profileActions'
 
 /**
  * Sagas
@@ -258,6 +259,15 @@ export function* getProfileByIdSaga(action) {
       type: GET_PROFILE_BY_ID_SUCCESS,
       payload: { data }
     })
+
+    if (data.githubusername) {
+      yield put({
+        type: GET_REPOS_REQUEST,
+        payload: { username: data.githubusername }
+      })
+
+    }
+
   } catch (error) {
     yield put({
       type: GET_PROFILE_BY_ID_ERROR,

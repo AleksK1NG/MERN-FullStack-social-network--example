@@ -42,6 +42,7 @@ export const updateUserProfile = (profileData) => {
 }
 
 export const getGithubRepos = (username) => {
+  debugger
   return {
     type: GET_REPOS_REQUEST,
     payload: { username }

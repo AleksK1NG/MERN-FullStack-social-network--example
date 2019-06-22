@@ -1,40 +1,27 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import Spinner from '../../Shared/Spinner/Spinner'
+import { reposSelector, userProfilesSelector } from '../../../ducks/profile/profileSelectors'
 import { getGithubRepos } from '../../../ducks/profile/profileActions'
-import { isLoadingSelector, reposSelector } from '../../../ducks/profile/profileSelectors'
+import Spinner from '../../Shared/Spinner/Spinner'
 
-const ProfileGithub = ({ username, getGithubRepos, repos, isLoading }) => {
-  useEffect(() => {
-    getGithubRepos(username)
-  }, [getGithubRepos, username])
+const ProfileGithub = ({ repos }) => {
+  if (repos) {
+    console.log('ProfileGithub render repos => ', repos)
+  }
+
+  if (!repos) return <h2>No repositories for this user </h2>
 
   return (
     <div className="profile-github">
       <h2 className="text-primary my-1">Github Repos</h2>
-      {repos ? (
-        <Spinner />
-      ) : (
-        repos.map((repo) => (
-          <div key={repo.id} className="repo bg-white p-1 my-1">
-            <div>
-              <h4>
-                <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
-                  {repo.name}
-                </a>
-              </h4>
-              <p>{repo.description}</p>
-            </div>
-            <div>
-              <ul>
-                <li className="badge badge-primary">Stars: {repo.stargazers_count}</li>
-                <li className="badge badge-dark">Watchers: {repo.watchers_count}</li>
-                <li className="badge badge-light">Forks: {repo.forks_count}</li>
-              </ul>
-            </div>
+      {repos ? repos.length : 'no repos'}
+
+      {repos &&
+        repos.map((r) => (
+          <div className="repo bg-white p-1 my-1" key={r.id}>
+            <h2>{r.name}</h2>
           </div>
-        ))
-      )}
+        ))}
     </div>
   )
 }
@@ -42,7 +29,7 @@ const ProfileGithub = ({ username, getGithubRepos, repos, isLoading }) => {
 export default connect(
   (state) => ({
     repos: reposSelector(state),
-    isLoading: isLoadingSelector(state)
+    profile: userProfilesSelector(state)
   }),
   { getGithubRepos }
 )(ProfileGithub)

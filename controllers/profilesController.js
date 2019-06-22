@@ -287,6 +287,8 @@ module.exports.deleteEducation = async (req, res) => {
 
 // @ GET Public get GitHub user repos
 module.exports.getGitHubRepos = async (req, res) => {
+
+  console.log('FET REPOS => ',   req.params.username)
   try {
     const options = {
       uri: `https://api.github.com/users/${
