@@ -7,7 +7,7 @@ import {
   reposSelector,
   userProfileSelector
 } from '../../ducks/profile/profileSelectors'
-import { getGithubRepos, getProfileById } from '../../ducks/profile/profileActions'
+import { getProfileById } from '../../ducks/profile/profileActions'
 import Spinner from '../../components/Shared/Spinner/Spinner'
 import ProfileTop from '../../components/Profile/ProfileTop/ProfileTop'
 import ProfileAbout from '../../components/Profile/ProfileAbout/ProfileAbout'
@@ -15,7 +15,7 @@ import ProfileExperience from '../../components/Profile/ProfileExperience/Profil
 import ProfileEducation from '../../components/Profile/ProfileEducation/ProfileEducation'
 import ProfileGithub from '../../components/Profile/ProfileGithub/ProfileGithub'
 
-const ProfilePage = ({ profile, isLoading, repos, getProfileById, match, profileOwner, getGithubRepos }) => {
+const ProfilePage = ({ profile, isLoading, repos, getProfileById, match, profileOwner }) => {
   useEffect(() => {
     getProfileById(match.params.id)
   }, [getProfileById, match.params.id])
@@ -36,7 +36,7 @@ const ProfilePage = ({ profile, isLoading, repos, getProfileById, match, profile
 
       <div className="profile-grid my-1">
         <ProfileTop profile={profile} />
-        {/*<ProfileAbout profile={profile} />*/}
+        <ProfileAbout profile={profile} />
 
         <div className="profile-exp bg-white p-2">
           <h2 className="text-primary">Experience</h2>
@@ -77,5 +77,5 @@ export default connect(
     repos: reposSelector(state),
     profileOwner: isCurrentUserProfileSelector(state)
   }),
-  { getProfileById, getGithubRepos }
+  { getProfileById }
 )(ProfilePage)
