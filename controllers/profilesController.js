@@ -161,8 +161,9 @@ module.exports.getProfileByUserId = async (req, res) => {
     if (!user) return res.status(400).json({ errors: [{ msg: 'Profile does not found' }] })
     const profile = await Profile.findOne({ user: userId })
     if (!profile) return res.status(400).json({ errors: [{ msg: 'Profile does not found' }] })
+    // add user object to profile
     profile.user = user
-    console.log('Profile user => ', profile.user)
+
     res.status(200).json(profile)
   } catch (error) {
     console.error(error.message)

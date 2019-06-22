@@ -17,18 +17,32 @@ import { Link } from 'react-router-dom'
 const Experience = load(lazy(() => import('../../components/Dashboard/Experience/Experience')))
 const Education = load(lazy(() => import('../../components/Dashboard/Education/Education')))
 
-const DashboardPage = ({ getCurrentUserProfile, userProfile, isLoading, user, deleteProfile, deleteExperience, deleteEducation }) => {
+const DashboardPage = ({
+  getCurrentUserProfile,
+  userProfile,
+  isLoading,
+  user,
+  deleteProfile,
+  deleteExperience,
+  deleteEducation,
+  history
+}) => {
+  debugger
   useEffect(() => {
     getCurrentUserProfile()
   }, [getCurrentUserProfile])
 
   if (isLoading || !user) return <Spinner />
 
+  const goToProfileHandler = () => {
+    history.push(`/profile/${user._id}`)
+  }
+
   return (
     <section className="container">
       <h1 className="large text-primary">Dashboard</h1>
       <p className="lead">
-        <i className="fas fa-user"></i> Welcome {user && user.name}
+        <i className="fas fa-user" onClick={goToProfileHandler}></i> Welcome {user && user.name}
       </p>
 
       {userProfile ? (

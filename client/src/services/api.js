@@ -95,7 +95,7 @@ class ApiService {
       }
     }
 
-    return axiosInstance.patch(PROFILE_URL, profileData, config)
+    return axiosInstance.patch(PROFILES_URL, profileData, config)
   }
 
   addExperience(formData) {

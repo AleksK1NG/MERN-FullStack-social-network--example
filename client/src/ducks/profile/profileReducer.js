@@ -63,6 +63,7 @@ export default function reducer(state = ReducerRecord, action) {
     case CLEAR_PROFILE_SUCCESS:
       return state
         .set('profile', null)
+        .set('repos', null)
         .set('isLoading', false)
         .set('error', null)
 

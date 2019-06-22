@@ -1,7 +1,6 @@
 import React, { Fragment, memo } from 'react'
 
 const ProfileAbout = ({ profile }) => {
-  console.log('profile user => ', profile.user)
   return (
     <div className="profile-about bg-light p-2">
       {profile.bio && (
