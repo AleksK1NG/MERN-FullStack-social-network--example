@@ -287,7 +287,7 @@ export function* getGitHubReposSaga(action) {
       type: GET_REPOS_SUCCESS,
       payload: { data }
     })
-    debugger
+
   } catch (error) {
     yield put({
       type: GET_REPOS_ERROR,

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 const ProfileTop = ({
   profile: {
@@ -54,4 +54,4 @@ const ProfileTop = ({
   )
 }
 
-export default ProfileTop
+export default memo(ProfileTop)

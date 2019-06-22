@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import Moment from 'react-moment'
 import moment from 'moment'
 
@@ -21,4 +21,4 @@ const ProfileExperience = ({ experience: { company, title, location, current, to
   </div>
 )
 
-export default ProfileExperience
+export default memo(ProfileExperience)

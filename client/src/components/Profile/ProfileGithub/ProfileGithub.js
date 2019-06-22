@@ -1,10 +1,6 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 const ProfileGithub = ({ repos }) => {
-  if (repos) {
-    console.log('ProfileGithub render repos => ', repos)
-  }
-
   if (!repos) return <h2>No repositories for this user </h2>
 
   return (
@@ -36,12 +32,4 @@ const ProfileGithub = ({ repos }) => {
   )
 }
 
-// export default connect(
-//   (state) => ({
-//     repos: reposSelector(state),
-//     profile: userProfilesSelector(state)
-//   }),
-//   { getGithubRepos }
-// )(ProfileGithub)
-
-export default React.memo(ProfileGithub)
+export default memo(ProfileGithub)

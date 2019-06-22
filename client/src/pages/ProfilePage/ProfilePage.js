@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react'
+import React, { useEffect, Fragment, Suspense } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {
@@ -9,11 +9,12 @@ import {
 } from '../../ducks/profile/profileSelectors'
 import { getProfileById } from '../../ducks/profile/profileActions'
 import Spinner from '../../components/Shared/Spinner/Spinner'
-import ProfileTop from '../../components/Profile/ProfileTop/ProfileTop'
-import ProfileAbout from '../../components/Profile/ProfileAbout/ProfileAbout'
-import ProfileExperience from '../../components/Profile/ProfileExperience/ProfileExperience'
-import ProfileEducation from '../../components/Profile/ProfileEducation/ProfileEducation'
-import ProfileGithub from '../../components/Profile/ProfileGithub/ProfileGithub'
+
+const ProfileTop = React.lazy(() => import('../../components/Profile/ProfileTop/ProfileTop'))
+const ProfileAbout = React.lazy(() => import('../../components/Profile/ProfileAbout/ProfileAbout'))
+const ProfileExperience = React.lazy(() => import('../../components/Profile/ProfileExperience/ProfileExperience'))
+const ProfileEducation = React.lazy(() => import('../../components/Profile/ProfileEducation/ProfileEducation'))
+const ProfileGithub = React.lazy(() => import('../../components/Profile/ProfileGithub/ProfileGithub'))
 
 const ProfilePage = ({ profile, isLoading, repos, getProfileById, match, profileOwner }) => {
   useEffect(() => {
@@ -34,42 +35,44 @@ const ProfilePage = ({ profile, isLoading, repos, getProfileById, match, profile
         </Link>
       )}
 
-      <div className="profile-grid my-1">
-        {profile && (
-          <Fragment>
-            <ProfileTop profile={profile} />
-            <ProfileAbout profile={profile} />
-          </Fragment>
-        )}
-
-        <div className="profile-exp bg-white p-2">
-          <h2 className="text-primary">Experience</h2>
-          {profile.experience.length > 0 ? (
+      <Suspense fallback={<Spinner />}>
+        <div className="profile-grid my-1">
+          {profile && (
             <Fragment>
-              {profile.experience.map((experience) => (
-                <ProfileExperience key={experience._id} experience={experience} />
-              ))}
+              <ProfileTop profile={profile} />
+              <ProfileAbout profile={profile} />
             </Fragment>
-          ) : (
-            <h4>No experience credentials</h4>
           )}
-        </div>
 
-        <div className="profile-edu bg-white p-2">
-          <h2 className="text-primary">Education</h2>
-          {profile.education.length > 0 ? (
-            <Fragment>
-              {profile.education.map((education) => (
-                <ProfileEducation key={education._id} education={education} />
-              ))}
-            </Fragment>
-          ) : (
-            <h4>No education credentials</h4>
-          )}
-        </div>
+          <div className="profile-exp bg-white p-2">
+            <h2 className="text-primary">Experience</h2>
+            {profile.experience.length > 0 ? (
+              <Fragment>
+                {profile.experience.map((experience) => (
+                  <ProfileExperience key={experience._id} experience={experience} />
+                ))}
+              </Fragment>
+            ) : (
+              <h4>No experience credentials</h4>
+            )}
+          </div>
 
-        {repos && <ProfileGithub repos={repos} />}
-      </div>
+          <div className="profile-edu bg-white p-2">
+            <h2 className="text-primary">Education</h2>
+            {profile.education.length > 0 ? (
+              <Fragment>
+                {profile.education.map((education) => (
+                  <ProfileEducation key={education._id} education={education} />
+                ))}
+              </Fragment>
+            ) : (
+              <h4>No education credentials</h4>
+            )}
+          </div>
+
+          {repos && <ProfileGithub repos={repos} />}
+        </div>
+      </Suspense>
     </section>
   )
 }

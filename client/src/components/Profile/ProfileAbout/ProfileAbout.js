@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, memo } from 'react'
 
 const ProfileAbout = ({ profile }) => {
-  debugger
   return (
     <div className="profile-about bg-light p-2">
       {profile.bio && (
@@ -24,4 +23,4 @@ const ProfileAbout = ({ profile }) => {
   )
 }
 
-export default ProfileAbout
+export default memo(ProfileAbout)
