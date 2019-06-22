@@ -3,12 +3,9 @@ import axios from 'axios'
  * Api Service
  * */
 
-
 const CURRENT_USER_PROFILE_URL = '/api/v1/profile/me'
 const PROFILES_URL = '/api/v1/profile'
-const USER_PROFILE_URL = '/api/v1/profile/user'
 const PROFILE_URL = '/api/v1/profile/user'
-const CREATE_PROFILE_URL = '/api/v1/profile'
 const GITHUB_REPOS_API_URL = '/api/v1/profile/github'
 const PROFILE_EXPERIENCE_URL = '/api/v1/profile/experience'
 const PROFILE_EDUCATION_URL = '/api/v1/profile/education'
@@ -16,6 +13,7 @@ const PROFILE_EDUCATION_URL = '/api/v1/profile/education'
 const USER_REGISTER_URL = '/api/v1/auth/register'
 const USER_LOGIN_URL = '/api/v1/auth/login'
 const LOAD_USER_URL = '/api/v1/auth/me'
+const POSTS_URL = '/api/v1/posts'
 
 // Axios Instance
 const axiosInstance = axios.create({
@@ -156,6 +154,38 @@ class ApiService {
 
   getGithubRepos(username) {
     return axios.get(`${GITHUB_REPOS_API_URL}/${username}`)
+  }
+
+  createPost(postData) {
+    return axiosInstance.post(POSTS_URL, postData)
+  }
+
+  getAllPosts() {
+    return axios.get(POSTS_URL)
+  }
+
+  getPostById(postId) {
+    return axios.get(`${POSTS_URL}/${postId}`)
+  }
+
+  deletePost(postId) {
+    return axios.delete(`${POSTS_URL}/${postId}`)
+  }
+
+  likePost(postId) {
+    return axiosInstance.put(`${POSTS_URL}/like/${postId}`)
+  }
+
+  unlikePost(postId) {
+    return axiosInstance.put(`${POSTS_URL}/unlike/${postId}`)
+  }
+
+  addCommentToPost(postId, comment) {
+    return axiosInstance.post(`${POSTS_URL}/comment/${postId}`)
+  }
+
+  deleteCommentFromPost(postId, commentId) {
+    return axiosInstance.post(`${POSTS_URL}/comment/${postId}/${commentId}`)
   }
 }
 
