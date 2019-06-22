@@ -35,8 +35,12 @@ const ProfilePage = ({ profile, isLoading, repos, getProfileById, match, profile
       )}
 
       <div className="profile-grid my-1">
-        <ProfileTop profile={profile} />
-        <ProfileAbout profile={profile} />
+        {profile && (
+          <Fragment>
+            <ProfileTop profile={profile} />
+            <ProfileAbout profile={profile} />
+          </Fragment>
+        )}
 
         <div className="profile-exp bg-white p-2">
           <h2 className="text-primary">Experience</h2>
