@@ -9,7 +9,6 @@ import {
 } from '../../ducks/profile/profileSelectors'
 import { getProfileById } from '../../ducks/profile/profileActions'
 import Spinner from '../../components/Shared/Spinner/Spinner'
-import { userSelector } from '../../ducks/auth/authSelectors'
 
 const ProfileTop = React.lazy(() => import('../../components/Profile/ProfileTop/ProfileTop'))
 const ProfileAbout = React.lazy(() => import('../../components/Profile/ProfileAbout/ProfileAbout'))
@@ -17,7 +16,7 @@ const ProfileExperience = React.lazy(() => import('../../components/Profile/Prof
 const ProfileEducation = React.lazy(() => import('../../components/Profile/ProfileEducation/ProfileEducation'))
 const ProfileGithub = React.lazy(() => import('../../components/Profile/ProfileGithub/ProfileGithub'))
 
-const ProfilePage = ({ profile, isLoading, repos, getProfileById, match, profileOwner, user }) => {
+const ProfilePage = ({ profile, isLoading, repos, getProfileById, match, profileOwner }) => {
   useEffect(() => {
     getProfileById(match.params.id)
   }, [getProfileById, match.params.id])
@@ -41,7 +40,7 @@ const ProfilePage = ({ profile, isLoading, repos, getProfileById, match, profile
           {profile && (
             <Fragment>
               <ProfileTop profile={profile} />
-              <ProfileAbout profile={profile} user={user} />
+              <ProfileAbout profile={profile} />
             </Fragment>
           )}
 
@@ -83,8 +82,7 @@ export default connect(
     profile: userProfileSelector(state),
     isLoading: isLoadingSelector(state),
     repos: reposSelector(state),
-    profileOwner: isCurrentUserProfileSelector(state),
-    user: userSelector(state)
+    profileOwner: isCurrentUserProfileSelector(state)
   }),
   { getProfileById }
 )(ProfilePage)
