@@ -180,8 +180,8 @@ class ApiService {
     return axiosInstance.put(`${POSTS_URL}/unlike/${postId}`)
   }
 
-  addCommentToPost(postId, comment) {
-    return axiosInstance.post(`${POSTS_URL}/comment/${postId}`)
+  addCommentToPost(postId, commentData) {
+    return axiosInstance.post(`${POSTS_URL}/comment/${postId}`, commentData)
   }
 
   deleteCommentFromPost(postId, commentId) {

@@ -8,6 +8,7 @@ import { loadUser } from '../../ducks/auth/authActions'
 import PostItem from '../../components/Post/PostItem/PostItem'
 import CommentItem from '../../components/Post/CommentItem/CommentItem'
 import CommentForm from '../../components/Post/CommentForm/CommentForm'
+import { Link } from 'react-router-dom'
 
 const PostPage = ({ getPostById, post, match, isLoading, currentUser, loadUser }) => {
   useEffect(() => {
@@ -19,12 +20,12 @@ const PostPage = ({ getPostById, post, match, isLoading, currentUser, loadUser }
 
   return (
     <section className="container">
-      <a href="posts.html" className="btn">
+      <Link to="/posts" className="btn">
         Back To Posts
-      </a>
+      </Link>
       <PostItem post={post} currentUser={currentUser} />
 
-      <CommentForm />
+      <CommentForm post={post} />
 
       <div className="comments">
         {post.comments.map((comment) => (

@@ -4,11 +4,11 @@ import { Form, Field } from 'react-final-form'
 import { addCommentToPost } from '../../../ducks/post/postActions'
 import { validatePostForm } from '../../../utils/finalFormValidators/validatePostForm'
 
-const CommentForm = ({ addCommentToPost }) => {
+const CommentForm = ({ addCommentToPost, post }) => {
   const onSubmit = (values, formApi) => {
     console.log(' Create comment values => ', values)
-    // addCommentToPost(values)
-    // formApi.reset()
+    addCommentToPost(post._id, values)
+    formApi.reset()
   }
 
   return (
