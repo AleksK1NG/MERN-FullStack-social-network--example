@@ -17,8 +17,8 @@ import {
   DELETE_COMMENT_FROM_POST_SUCCESS,
   DELETE_POST_ERROR,
   DELETE_POST_REQUEST,
-  DELETE_POST_SUCCESS,
-  GET_POST_BY_ID_REQUEST,
+  DELETE_POST_SUCCESS, GET_POST_BY_ID_ERROR,
+  GET_POST_BY_ID_REQUEST, GET_POST_BY_ID_SUCCESS,
   GET_POSTS_ERROR,
   GET_POSTS_REQUEST,
   GET_POSTS_SUCCESS,
@@ -29,7 +29,6 @@ import {
   UNLIKE_POST_REQUEST,
   UNLIKE_POST_SUCCESS
 } from './postConstants'
-import { GET_PROFILE_BY_ID_ERROR, GET_PROFILE_BY_ID_SUCCESS } from '../profile/profileConstants'
 // import { replace } from 'connected-react-router'
 
 /**
@@ -60,12 +59,15 @@ export function* getPostByIdSaga({ payload }) {
     const { data } = yield call(api.getPostById, payload.postId)
 
     yield put({
-      type: GET_PROFILE_BY_ID_SUCCESS,
+      type: GET_POST_BY_ID_SUCCESS,
       payload: { data }
     })
+    debugger
+
+
   } catch (error) {
     yield put({
-      type: GET_PROFILE_BY_ID_ERROR,
+      type: GET_POST_BY_ID_ERROR,
       payload: { error }
     })
     console.error(error)

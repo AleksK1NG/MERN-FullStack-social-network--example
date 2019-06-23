@@ -1,6 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { isLoadingSelector, postSelector } from '../../ducks/post/postSelectors'
+import { getPostById } from '../../ducks/post/postActions'
+import Spinner from '../../components/Shared/Spinner/Spinner'
 
-const PostPage = () => {
+const PostPage = ({ getPostById, post, match, isLoading }) => {
+  useEffect(() => {
+    getPostById(match.params.id)
+  }, [getPostById, match.params.id])
+
+  if (isLoading || !post) return <Spinner />
+
   return (
     <section className="container">
       <a href="posts.html" className="btn">
@@ -86,4 +96,10 @@ const PostPage = () => {
   )
 }
 
-export default PostPage
+export default connect(
+  (state) => ({
+    post: postSelector(state),
+    isLoading: isLoadingSelector(state)
+  }),
+  { getPostById }
+)(PostPage)
