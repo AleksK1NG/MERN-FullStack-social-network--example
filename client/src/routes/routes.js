@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute'
 
+
 const LoginPage = React.lazy(() => import('../pages/LoginPage/LoginPage'))
 const RegisterPage = React.lazy(() => import('../pages/RegisterPage/RegisterPage'))
 const DashboardPage = React.lazy(() => import('../pages/DashboardPage/DashboardPage'))
@@ -11,6 +12,7 @@ const AddEducationPage = React.lazy(() => import('../pages/AddEducationPage/AddE
 const AddExperiencePage = React.lazy(() => import('../pages/AddExperiencePage/AddExperiencePage'))
 const ProfilePage = React.lazy(() => import('../pages/ProfilePage/ProfilePage'))
 const ProfilesPage = React.lazy(() => import('../pages/ProfilesPage/ProfilesPage'))
+const PostsPage = React.lazy(() => import('../pages/PostsPage/PostsPage'))
 
 const Routes = () => {
   return (
@@ -25,6 +27,7 @@ const Routes = () => {
         <ProtectedRoute exact path="/add-experience" component={AddExperiencePage} />
         <Route exact path="/profile/:id" component={ProfilePage} />
         <Route exact path="/profiles" component={ProfilesPage} />
+        <Route exact path="/posts" component={PostsPage} />
       </Switch>
     </section>
   )
