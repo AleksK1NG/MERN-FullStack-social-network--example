@@ -9,10 +9,8 @@ const PostItem = ({
   likePost,
   unlikePost,
   deletePost,
-  isAuthenticated,
   post: { _id, text, name, avatar, user, likes, comments, date },
   showActions,
-  isLoadingAuth,
   currentUser
 }) => {
   return (
@@ -59,7 +57,6 @@ PostItem.defaultProps = {
 export default connect(
   (state) => ({
     isAuthenticated: isAuthenticatedSelector(state),
-    // currentUser: userSelector(state),
     isLoadingAuth: isLoadingSelector(state)
   }),
   { deletePost, likePost, unlikePost }
