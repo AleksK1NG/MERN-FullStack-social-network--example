@@ -44,13 +44,13 @@ export function* getPostsSaga() {
       type: GET_POSTS_SUCCESS,
       payload: { data }
     })
-    debugger
   } catch (error) {
-    console.log(error)
     yield put({
       type: GET_POSTS_ERROR,
       payload: { error }
     })
+    console.error(error)
+
     toast.error(rejectError(error))
   }
 }
@@ -63,19 +63,17 @@ export function* getPostByIdSaga({ payload }) {
       type: GET_PROFILE_BY_ID_SUCCESS,
       payload: { data }
     })
-    debugger
   } catch (error) {
-    console.log(error)
     yield put({
       type: GET_PROFILE_BY_ID_ERROR,
       payload: { error }
     })
+    console.error(error)
     toast.error(rejectError(error))
   }
 }
 
 export function* createPostSaga({ payload }) {
-  debugger
   try {
     const { data } = yield call(api.createPost, payload.postData)
 
@@ -83,16 +81,15 @@ export function* createPostSaga({ payload }) {
       type: CREATE_POST_SUCCESS,
       payload: { data }
     })
-    debugger
 
     toast.success('Post created ! =D')
     // yield put(replace('/dashboard'))
   } catch (error) {
-    console.log(error)
     yield put({
       type: CREATE_POST_ERROR,
       payload: { error }
     })
+    console.error(error)
     toast.error(rejectError(error))
   }
 }
@@ -120,7 +117,6 @@ export function* deletePostSaga({ payload }) {
 }
 
 export function* likePostSaga({ payload }) {
-  debugger
   try {
     const { data } = yield call(api.likePost, payload.postId)
 
@@ -128,16 +124,15 @@ export function* likePostSaga({ payload }) {
       type: LIKE_POST_SUCCESS,
       payload: { data, postId: payload.postId }
     })
-    debugger
 
     toast.success('You have liked this post ! =D')
     // yield put(replace('/dashboard'))
   } catch (error) {
-    console.log(error)
     yield put({
       type: LIKE_POST_ERROR,
       payload: { error }
     })
+
     toast.error(rejectError(error))
   }
 }
@@ -150,16 +145,15 @@ export function* unlikePostSaga({ payload }) {
       type: UNLIKE_POST_SUCCESS,
       payload: { data, postId: payload.postId }
     })
-    debugger
 
-    toast.success('You have liked this post ! =D')
+    toast.success('You have unliked this post ! =D')
     // yield put(replace('/dashboard'))
   } catch (error) {
-    console.log(error)
     yield put({
       type: UNLIKE_POST_ERROR,
       payload: { error }
     })
+    console.error(error)
     toast.error(rejectError(error))
   }
 }
@@ -178,11 +172,11 @@ export function* addCommentSaga({ payload }) {
     toast.success('Comments created ! =D')
     // yield put(replace('/dashboard'))
   } catch (error) {
-    console.log(error)
     yield put({
       type: ADD_COMMENT_TO_POST_ERROR,
       payload: { error }
     })
+    console.error(error)
     toast.error(rejectError(error))
   }
 }
@@ -201,11 +195,11 @@ export function* deleteCommentSaga({ payload }) {
     toast.success('Comment deleted ! =D')
     // yield put(replace('/dashboard'))
   } catch (error) {
-    console.log(error)
     yield put({
       type: DELETE_COMMENT_FROM_POST_ERROR,
       payload: { error }
     })
+    console.error(error)
     toast.error(rejectError(error))
   }
 }
