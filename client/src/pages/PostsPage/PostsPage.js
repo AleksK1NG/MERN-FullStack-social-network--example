@@ -1,7 +1,16 @@
-import React from 'react'
-import {connect} from 'react-redux'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { getAllPosts } from '../../ducks/post/postActions'
+import { isLoadingSelector, postsSelector } from '../../ducks/post/postSelectors'
+import Spinner from '../../components/Shared/Spinner/Spinner'
 
-const PostsPage = () => {
+const PostsPage = ({ posts, getAllPosts, isLoading }) => {
+  useEffect(() => {
+    getAllPosts()
+  }, [getAllPosts])
+
+  if (isLoading || !posts) return <Spinner />
+
   return (
     <section className="container">
       <h1 className="large text-primary">Posts</h1>
@@ -92,4 +101,10 @@ const PostsPage = () => {
   )
 }
 
-export default connect(state => ({}), {})(PostsPage)
+export default connect(
+  (state) => ({
+    posts: postsSelector(state),
+    isLoading: isLoadingSelector(state)
+  }),
+  { getAllPosts }
+)(PostsPage)

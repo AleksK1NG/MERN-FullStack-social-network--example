@@ -18,3 +18,5 @@ export const postSelector = createSelector(
     return post ? post.toJS() : null
   }
 )
+
+export const isLoadingSelector = createSelector(stateSelector, state => state.get('isLoading'))
