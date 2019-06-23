@@ -120,6 +120,7 @@ export function* deletePostSaga({ payload }) {
 }
 
 export function* likePostSaga({ payload }) {
+  debugger
   try {
     const { data } = yield call(api.likePost, payload.postId)
 
