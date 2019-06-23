@@ -169,7 +169,7 @@ class ApiService {
   }
 
   deletePost(postId) {
-    return axios.delete(`${POSTS_URL}/${postId}`)
+    return axiosInstance.delete(`${POSTS_URL}/${postId}`)
   }
 
   likePost(postId) {

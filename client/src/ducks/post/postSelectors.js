@@ -1,5 +1,7 @@
 import { moduleName } from './postConstants'
 import { createSelector } from 'reselect'
+import { userSelector } from '../auth/authSelectors'
+import { userProfileSelector } from '../profile/profileSelectors'
 
 export const stateSelector = (state) => state[moduleName]
 
@@ -18,5 +20,11 @@ export const postSelector = createSelector(
     return post ? post.toJS() : null
   }
 )
+
+export const isPostCreatorSelector = createSelector([userSelector, postsSelector], (user, posts) => {
+  if (user && posts) {
+    return user._id === user._id
+  }
+})
 
 export const isLoadingSelector = createSelector(stateSelector, state => state.get('isLoading'))

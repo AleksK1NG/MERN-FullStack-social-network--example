@@ -97,6 +97,7 @@ export function* createPostSaga({ payload }) {
 }
 
 export function* deletePostSaga({ payload }) {
+  debugger
   try {
     const { data } = yield call(api.deletePost, payload.postId)
 

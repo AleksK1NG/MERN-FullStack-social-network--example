@@ -5,11 +5,14 @@ import { isLoadingSelector, postsSelector } from '../../ducks/post/postSelectors
 import Spinner from '../../components/Shared/Spinner/Spinner'
 import PostItem from '../../components/Post/PostItem/PostItem'
 import PostForm from '../../components/Post/PostForm/PostForm'
+import { loadUser } from '../../ducks/auth/authActions'
+import { userSelector } from '../../ducks/auth/authSelectors'
 
-const PostsPage = ({ posts, getAllPosts, isLoading }) => {
+const PostsPage = ({ posts, getAllPosts, isLoading, loadUser, currentUser }) => {
   useEffect(() => {
     getAllPosts()
-  }, [getAllPosts])
+    loadUser()
+  }, [getAllPosts, loadUser])
 
   if (isLoading || !posts) return <Spinner />
 
@@ -24,7 +27,7 @@ const PostsPage = ({ posts, getAllPosts, isLoading }) => {
 
       <div className="posts">
         {posts.map((post) => (
-          <PostItem key={post._id} post={post} />
+          <PostItem key={post._id} post={post} currentUser={currentUser} />
         ))}
       </div>
     </section>
@@ -34,7 +37,8 @@ const PostsPage = ({ posts, getAllPosts, isLoading }) => {
 export default connect(
   (state) => ({
     posts: postsSelector(state),
-    isLoading: isLoadingSelector(state)
+    isLoading: isLoadingSelector(state),
+    currentUser: userSelector(state),
   }),
-  { getAllPosts }
+  { getAllPosts, loadUser }
 )(PostsPage)
