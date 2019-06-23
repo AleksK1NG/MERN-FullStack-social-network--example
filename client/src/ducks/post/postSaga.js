@@ -6,16 +6,31 @@ import { rejectError } from '../../utils/rejectErrorHelper'
 import api from '../../services/api'
 
 import {
+  ADD_COMMENT_TO_POST_ERROR,
+  ADD_COMMENT_TO_POST_REQUEST,
+  ADD_COMMENT_TO_POST_SUCCESS,
   CREATE_POST_ERROR,
   CREATE_POST_REQUEST,
-  CREATE_POST_SUCCESS, DELETE_POST_ERROR, DELETE_POST_REQUEST, DELETE_POST_SUCCESS,
+  CREATE_POST_SUCCESS,
+  DELETE_COMMENT_FROM_POST_ERROR,
+  DELETE_COMMENT_FROM_POST_REQUEST,
+  DELETE_COMMENT_FROM_POST_SUCCESS,
+  DELETE_POST_ERROR,
+  DELETE_POST_REQUEST,
+  DELETE_POST_SUCCESS,
   GET_POST_BY_ID_REQUEST,
   GET_POSTS_ERROR,
   GET_POSTS_REQUEST,
-  GET_POSTS_SUCCESS
+  GET_POSTS_SUCCESS,
+  LIKE_POST_ERROR,
+  LIKE_POST_REQUEST,
+  LIKE_POST_SUCCESS,
+  UNLIKE_POST_ERROR,
+  UNLIKE_POST_REQUEST,
+  UNLIKE_POST_SUCCESS
 } from './postConstants'
 import { GET_PROFILE_BY_ID_ERROR, GET_PROFILE_BY_ID_SUCCESS } from '../profile/profileConstants'
-import { replace } from "connected-react-router"
+import { replace } from 'connected-react-router'
 
 /**
  * Sagas
@@ -103,7 +118,95 @@ export function* deletePostSaga({ payload }) {
   }
 }
 
+export function* likePostSaga({ payload }) {
+  try {
+    const { data } = yield call(api.likePost, payload.postId)
 
+    yield put({
+      type: LIKE_POST_SUCCESS,
+      payload: { data, postId: payload.postId }
+    })
+    debugger
+
+    toast.success('You have liked this post ! =D')
+    // yield put(replace('/dashboard'))
+  } catch (error) {
+    console.log(error)
+    yield put({
+      type: LIKE_POST_ERROR,
+      payload: { error }
+    })
+    toast.error(rejectError(error))
+  }
+}
+
+export function* unlikePostSaga({ payload }) {
+  try {
+    const { data } = yield call(api.unlikePost, payload.postId)
+
+    yield put({
+      type: UNLIKE_POST_SUCCESS,
+      payload: { data, postId: payload.postId }
+    })
+    debugger
+
+    toast.success('You have liked this post ! =D')
+    // yield put(replace('/dashboard'))
+  } catch (error) {
+    console.log(error)
+    yield put({
+      type: UNLIKE_POST_ERROR,
+      payload: { error }
+    })
+    toast.error(rejectError(error))
+  }
+}
+
+export function* addCommentSaga({ payload }) {
+  const { postId, commentData } = payload
+  try {
+    const { data } = yield call(api.addCommentToPost, postId, commentData)
+
+    yield put({
+      type: ADD_COMMENT_TO_POST_SUCCESS,
+      payload: { data, postId: payload.postId }
+    })
+    debugger
+
+    toast.success('Comments created ! =D')
+    // yield put(replace('/dashboard'))
+  } catch (error) {
+    console.log(error)
+    yield put({
+      type: ADD_COMMENT_TO_POST_ERROR,
+      payload: { error }
+    })
+    toast.error(rejectError(error))
+  }
+}
+
+export function* deleteCommentSaga({ payload }) {
+  const { postId, commentId } = payload
+  try {
+    const { data } = yield call(api.deleteCommentFromPost, postId, commentId)
+
+    yield put({
+      type: DELETE_COMMENT_FROM_POST_SUCCESS,
+      payload: { data, postId: payload.postId }
+    })
+    debugger
+
+    toast.success('Comment deleted ! =D')
+    // yield put(replace('/dashboard'))
+  } catch (error) {
+    console.log(error)
+    yield put({
+      type: DELETE_COMMENT_FROM_POST_ERROR,
+      payload: { error }
+    })
+    toast.error(rejectError(error))
+  }
+}
 
 export function* saga() {
   yield all([
@@ -111,5 +214,9 @@ export function* saga() {
     takeEvery(GET_POST_BY_ID_REQUEST, getPostByIdSaga),
     takeEvery(CREATE_POST_REQUEST, createPostSaga),
     takeEvery(DELETE_POST_REQUEST, deletePostSaga),
+    takeEvery(LIKE_POST_REQUEST, likePostSaga),
+    takeEvery(UNLIKE_POST_REQUEST, unlikePostSaga),
+    takeEvery(ADD_COMMENT_TO_POST_REQUEST, addCommentSaga),
+    takeEvery(DELETE_COMMENT_FROM_POST_REQUEST, deleteCommentSaga)
   ])
 }
