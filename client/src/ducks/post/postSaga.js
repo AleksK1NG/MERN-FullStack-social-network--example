@@ -30,7 +30,7 @@ import {
   UNLIKE_POST_SUCCESS
 } from './postConstants'
 import { GET_PROFILE_BY_ID_ERROR, GET_PROFILE_BY_ID_SUCCESS } from '../profile/profileConstants'
-import { replace } from 'connected-react-router'
+// import { replace } from 'connected-react-router'
 
 /**
  * Sagas
@@ -75,6 +75,7 @@ export function* getPostByIdSaga({ payload }) {
 }
 
 export function* createPostSaga({ payload }) {
+  debugger
   try {
     const { data } = yield call(api.createPost, payload.postData)
 

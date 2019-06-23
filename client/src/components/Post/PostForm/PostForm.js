@@ -7,8 +7,8 @@ import { validatePostForm } from '../../../utils/finalFormValidators/validatePos
 const PostForm = ({ createPost }) => {
   const onSubmit = (values, formApi) => {
     console.log(' Create post values => ', values)
-    // createPost(values)
-    // formApi.reset()
+    createPost(values)
+    formApi.reset()
   }
 
   return (
