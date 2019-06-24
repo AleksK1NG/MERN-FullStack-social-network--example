@@ -31,7 +31,6 @@ import {
   UNLIKE_POST_REQUEST,
   UNLIKE_POST_SUCCESS
 } from './postConstants'
-// import { replace } from 'connected-react-router'
 
 /**
  * Sagas
@@ -84,7 +83,6 @@ export function* createPostSaga({ payload }) {
     })
 
     toast.success('Post created ! =D')
-    // yield put(replace('/dashboard'))
   } catch (error) {
     yield put({
       type: CREATE_POST_ERROR,
@@ -96,7 +94,6 @@ export function* createPostSaga({ payload }) {
 }
 
 export function* deletePostSaga({ payload }) {
-  debugger
   try {
     const { data } = yield call(api.deletePost, payload.postId)
 
@@ -104,10 +101,8 @@ export function* deletePostSaga({ payload }) {
       type: DELETE_POST_SUCCESS,
       payload: { data, postId: payload.postId }
     })
-    debugger
 
     toast.success('Post Deleted ! =D')
-    // yield put(replace('/dashboard'))
   } catch (error) {
     console.log(error)
     yield put({
@@ -119,7 +114,6 @@ export function* deletePostSaga({ payload }) {
 }
 
 export function* likePostSaga({ payload }) {
-  debugger
   try {
     const { data } = yield call(api.likePost, payload.postId)
 
@@ -127,9 +121,8 @@ export function* likePostSaga({ payload }) {
       type: LIKE_POST_SUCCESS,
       payload: { data, postId: payload.postId }
     })
-    debugger
+
     toast.success('You have liked this post ! =D')
-    // yield put(replace('/dashboard'))
   } catch (error) {
     yield put({
       type: LIKE_POST_ERROR,
@@ -141,7 +134,6 @@ export function* likePostSaga({ payload }) {
 }
 
 export function* unlikePostSaga({ payload }) {
-  debugger
   try {
     const { data } = yield call(api.unlikePost, payload.postId)
 
@@ -149,9 +141,8 @@ export function* unlikePostSaga({ payload }) {
       type: UNLIKE_POST_SUCCESS,
       payload: { data, postId: payload.postId }
     })
-    debugger
+
     toast.success('You have unliked this post ! =D')
-    // yield put(replace('/dashboard'))
   } catch (error) {
     yield put({
       type: UNLIKE_POST_ERROR,
@@ -174,7 +165,6 @@ export function* addCommentSaga({ payload }) {
     })
 
     toast.success('Comments created ! =D')
-    // yield put(replace('/dashboard'))
   } catch (error) {
     yield put({
       type: ADD_COMMENT_TO_POST_ERROR,
@@ -196,7 +186,6 @@ export function* deleteCommentSaga({ payload }) {
     })
 
     toast.success('Comment deleted ! =D')
-    // yield put(replace('/dashboard'))
   } catch (error) {
     yield put({
       type: DELETE_COMMENT_FROM_POST_ERROR,

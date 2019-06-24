@@ -72,31 +72,21 @@ export default function reducer(state = ReducerRecord, action) {
 
     case LIKE_POST_SUCCESS:
     case UNLIKE_POST_SUCCESS:
-      // if (state.get('posts') === null) {
-      //   debugger
-      //   console.log('Null')
-      // }
       return state.update('posts', (posts) =>
         posts
-          // .map((p) => (p.get('_id') === payload.postId ? p.set('likes', fromJS(payload.data)) : p))
-          .map((p) => {
-            debugger
-            return p.get('_id') === payload.postId ? p.set('likes', fromJS(payload.data)) : p
-          })
+          .map((p) => (p.get('_id') === payload.postId ? p.set('likes', fromJS(payload.data)) : p))
           .set('isLoading', false)
           .set('error', null)
       )
 
     case ADD_COMMENT_TO_POST_SUCCESS:
       return state
-        // .updateIn(['post', 'comments'], (comments) => comments.concat(fromJS(payload.data)))
         .setIn(['post', 'comments'], fromJS(payload.data))
         .set('isLoading', false)
         .set('error', null)
 
     case DELETE_COMMENT_FROM_POST_SUCCESS:
       return state
-        // .updateIn(['post', 'comments'], (comments) => comments.filter((c) => c.get('_id') !== payload.postId))
         .setIn(['post', 'comments'], fromJS(payload.data))
         .set('isLoading', false)
         .set('error', null)

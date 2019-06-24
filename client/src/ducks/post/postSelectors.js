@@ -1,7 +1,6 @@
 import { moduleName } from './postConstants'
 import { createSelector } from 'reselect'
 import { userSelector } from '../auth/authSelectors'
-import { userProfileSelector } from '../profile/profileSelectors'
 
 export const stateSelector = (state) => state[moduleName]
 
