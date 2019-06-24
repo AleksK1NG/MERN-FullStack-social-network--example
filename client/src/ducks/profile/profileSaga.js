@@ -65,7 +65,7 @@ export function* createUserProfileSaga(action) {
   const {
     payload: { profileData }
   } = action
-  debugger
+
   try {
     const { data } = yield call(api.createUserProfile, profileData)
 
@@ -73,7 +73,7 @@ export function* createUserProfileSaga(action) {
       type: CREATE_PROFILE_SUCCESS,
       payload: { data }
     })
-    debugger
+
     toast.success('Success ! =D')
     yield put(replace('/dashboard'))
   } catch (error) {
@@ -148,7 +148,7 @@ export function* addExperienceSaga(action) {
       type: ADD_EXPERIENCE_SUCCESS,
       payload: { data }
     })
-    debugger
+
     toast.success('Success ! =D')
     yield put(replace('/dashboard'))
   } catch (error) {

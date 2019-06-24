@@ -12,7 +12,6 @@ module.exports.getCurrentUserProfile = async (req, res) => {
     const profile = await Profile.findOne({ user: req.user.id }).populate('name', ['name', 'avatar', 'email'])
     if (!profile) return res.status(400).json({ errors: [{ msg: 'Not found profile for this user' }] })
 
-    console.log('GET CURRENT USER REQ USER => ', req.user)
 
     res.status(200).json(profile)
   } catch (error) {
@@ -75,7 +74,6 @@ module.exports.createUserProfile = async (req, res) => {
     profile = new Profile(profileFields)
     await profile.save()
 
-    console.log('PROFILE CREATE => ', profile)
     res.status(201).json(profile)
   } catch (error) {
     console.error(error)
@@ -135,7 +133,6 @@ module.exports.updateUserProfile = async (req, res) => {
     // update find by user.id, $set: update user object, new: true - for get updated user back
     profile = await Profile.findOneAndUpdate({ user: req.user.id }, { $set: profileFields }, { new: true })
 
-    console.log('PROFILE UDPATE => ', profile)
     return res.status(201).json(profile)
   } catch (error) {
     console.error(error)
@@ -295,7 +292,6 @@ module.exports.deleteEducation = async (req, res) => {
 // @ GET Public get GitHub user repos
 module.exports.getGitHubRepos = async (req, res) => {
 
-  console.log('FET REPOS => ',   req.params.username)
   try {
     const options = {
       uri: `https://api.github.com/users/${

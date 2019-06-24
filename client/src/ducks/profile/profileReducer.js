@@ -11,11 +11,14 @@ import {
   CREATE_PROFILE_ERROR,
   CREATE_PROFILE_REQUEST,
   CREATE_PROFILE_SUCCESS,
-  DELETE_EDUCATION_ERROR, DELETE_EDUCATION_REQUEST,
+  DELETE_EDUCATION_ERROR,
+  DELETE_EDUCATION_REQUEST,
   DELETE_EDUCATION_SUCCESS,
-  DELETE_EXPERIENCE_ERROR, DELETE_EXPERIENCE_REQUEST,
+  DELETE_EXPERIENCE_ERROR,
+  DELETE_EXPERIENCE_REQUEST,
   DELETE_EXPERIENCE_SUCCESS,
-  DELETE_PROFILE_ERROR, DELETE_PROFILE_REQUEST,
+  DELETE_PROFILE_ERROR,
+  DELETE_PROFILE_REQUEST,
   DELETE_PROFILE_SUCCESS,
   GET_CURRENT_PROFILE_ERROR,
   GET_CURRENT_PROFILE_SUCCESS,
@@ -79,13 +82,10 @@ export default function reducer(state = ReducerRecord, action) {
     case UPDATE_PROFILE_SUCCESS:
     case ADD_EDUCATION_SUCCESS:
     case ADD_EXPERIENCE_SUCCESS:
-      return (
-        state
-          // .merge({ profile: payload.data })
-          .set('profile', fromJS(payload.data))
-          .set('error', null)
-          .set('isLoading', false)
-      )
+      return state
+        .set('profile', fromJS(payload.data))
+        .set('error', null)
+        .set('isLoading', false)
 
     case GET_REPOS_SUCCESS:
       return state
