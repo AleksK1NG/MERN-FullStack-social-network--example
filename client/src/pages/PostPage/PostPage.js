@@ -23,7 +23,7 @@ const PostPage = ({ getPostById, post, match, isLoading, currentUser, loadUser, 
       <Link to="/posts" className="btn">
         Back To Posts
       </Link>
-      <PostItem post={post} currentUser={currentUser} />
+      <PostItem post={post} currentUser={currentUser} showActions={false} />
 
       <CommentForm post={post} />
 

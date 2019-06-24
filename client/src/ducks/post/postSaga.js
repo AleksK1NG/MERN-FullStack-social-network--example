@@ -119,6 +119,7 @@ export function* deletePostSaga({ payload }) {
 }
 
 export function* likePostSaga({ payload }) {
+  debugger
   try {
     const { data } = yield call(api.likePost, payload.postId)
 
@@ -126,6 +127,7 @@ export function* likePostSaga({ payload }) {
       type: LIKE_POST_SUCCESS,
       payload: { data, postId: payload.postId }
     })
+    debugger
     toast.success('You have liked this post ! =D')
     // yield put(replace('/dashboard'))
   } catch (error) {
@@ -139,6 +141,7 @@ export function* likePostSaga({ payload }) {
 }
 
 export function* unlikePostSaga({ payload }) {
+  debugger
   try {
     const { data } = yield call(api.unlikePost, payload.postId)
 
@@ -146,6 +149,7 @@ export function* unlikePostSaga({ payload }) {
       type: UNLIKE_POST_SUCCESS,
       payload: { data, postId: payload.postId }
     })
+    debugger
     toast.success('You have unliked this post ! =D')
     // yield put(replace('/dashboard'))
   } catch (error) {

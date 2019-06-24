@@ -8,6 +8,7 @@ const CommentItem = ({
   deleteCommentFromPost,
   currentUser
 }) => {
+  console.log('RENDER Comment Item => ')
   return (
     <div className="post bg-white p-1 my-1">
       <div>
@@ -31,4 +32,4 @@ const CommentItem = ({
   )
 }
 
-export default CommentItem
+export default React.memo(CommentItem)
