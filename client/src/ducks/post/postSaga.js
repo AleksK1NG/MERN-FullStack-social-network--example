@@ -17,8 +17,10 @@ import {
   DELETE_COMMENT_FROM_POST_SUCCESS,
   DELETE_POST_ERROR,
   DELETE_POST_REQUEST,
-  DELETE_POST_SUCCESS, GET_POST_BY_ID_ERROR,
-  GET_POST_BY_ID_REQUEST, GET_POST_BY_ID_SUCCESS,
+  DELETE_POST_SUCCESS,
+  GET_POST_BY_ID_ERROR,
+  GET_POST_BY_ID_REQUEST,
+  GET_POST_BY_ID_SUCCESS,
   GET_POSTS_ERROR,
   GET_POSTS_REQUEST,
   GET_POSTS_SUCCESS,
@@ -62,9 +64,6 @@ export function* getPostByIdSaga({ payload }) {
       type: GET_POST_BY_ID_SUCCESS,
       payload: { data }
     })
-    debugger
-
-
   } catch (error) {
     yield put({
       type: GET_POST_BY_ID_ERROR,
@@ -120,7 +119,6 @@ export function* deletePostSaga({ payload }) {
 }
 
 export function* likePostSaga({ payload }) {
-  debugger
   try {
     const { data } = yield call(api.likePost, payload.postId)
 
@@ -128,7 +126,6 @@ export function* likePostSaga({ payload }) {
       type: LIKE_POST_SUCCESS,
       payload: { data, postId: payload.postId }
     })
-    debugger
     toast.success('You have liked this post ! =D')
     // yield put(replace('/dashboard'))
   } catch (error) {
@@ -142,7 +139,6 @@ export function* likePostSaga({ payload }) {
 }
 
 export function* unlikePostSaga({ payload }) {
-  debugger
   try {
     const { data } = yield call(api.unlikePost, payload.postId)
 
@@ -150,7 +146,6 @@ export function* unlikePostSaga({ payload }) {
       type: UNLIKE_POST_SUCCESS,
       payload: { data, postId: payload.postId }
     })
-    debugger
     toast.success('You have unliked this post ! =D')
     // yield put(replace('/dashboard'))
   } catch (error) {
@@ -173,7 +168,6 @@ export function* addCommentSaga({ payload }) {
       type: ADD_COMMENT_TO_POST_SUCCESS,
       payload: { data, postId: payload.postId }
     })
-    debugger
 
     toast.success('Comments created ! =D')
     // yield put(replace('/dashboard'))
@@ -189,7 +183,6 @@ export function* addCommentSaga({ payload }) {
 
 export function* deleteCommentSaga({ payload }) {
   const { postId, commentId } = payload
-  debugger
   try {
     const { data } = yield call(api.deleteCommentFromPost, postId, commentId)
 
@@ -197,7 +190,6 @@ export function* deleteCommentSaga({ payload }) {
       type: DELETE_COMMENT_FROM_POST_SUCCESS,
       payload: { data, postId: payload.postId }
     })
-    debugger
 
     toast.success('Comment deleted ! =D')
     // yield put(replace('/dashboard'))

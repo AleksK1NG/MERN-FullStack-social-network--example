@@ -29,7 +29,7 @@ const PostPage = ({ getPostById, post, match, isLoading, currentUser, loadUser, 
 
       <div className="comments">
         {post.comments.map((comment) => (
-          <CommentItem key={comment._id} comment={comment} postId={post._id} deleteCommentFromPost={deleteCommentFromPost} />
+          <CommentItem key={comment._id} comment={comment} postId={post._id} deleteCommentFromPost={deleteCommentFromPost} currentUser={currentUser} />
         ))}
       </div>
     </section>
