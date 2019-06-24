@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable'
+import { fromJS, merge } from 'immutable'
 import {
   ADD_COMMENT_TO_POST_ERROR,
   ADD_COMMENT_TO_POST_SUCCESS,
@@ -81,13 +81,15 @@ export default function reducer(state = ReducerRecord, action) {
 
     case ADD_COMMENT_TO_POST_SUCCESS:
       return state
-        .updateIn(['post', 'comments'], (comments) => comments.concat(fromJS(payload.data)))
+        // .updateIn(['post', 'comments'], (comments) => comments.concat(fromJS(payload.data)))
+        .setIn(['post', 'comments'], fromJS(payload.data))
         .set('isLoading', false)
         .set('error', null)
 
     case DELETE_COMMENT_FROM_POST_SUCCESS:
       return state
-        .updateIn(['post', 'comments'], (comments) => comments.filter((c) => c.get('_id') !== payload.postId))
+        // .updateIn(['post', 'comments'], (comments) => comments.filter((c) => c.get('_id') !== payload.postId))
+        .setIn(['post', 'comments'], fromJS(payload.data))
         .set('isLoading', false)
         .set('error', null)
 

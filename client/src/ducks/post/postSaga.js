@@ -165,7 +165,7 @@ export function* unlikePostSaga({ payload }) {
 
 export function* addCommentSaga({ payload }) {
   const { postId, commentData } = payload
-  debugger
+
   try {
     const { data } = yield call(api.addCommentToPost, postId, commentData)
 
@@ -189,6 +189,7 @@ export function* addCommentSaga({ payload }) {
 
 export function* deleteCommentSaga({ payload }) {
   const { postId, commentId } = payload
+  debugger
   try {
     const { data } = yield call(api.deleteCommentFromPost, postId, commentId)
 

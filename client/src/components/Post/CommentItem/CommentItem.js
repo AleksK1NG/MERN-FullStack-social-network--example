@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Moment from 'react-moment'
 
-const CommentItem = ({ postId, comment: { _id, text, name, avatar, user, date }, deleteComment, currentUser }) => {
+const CommentItem = ({ postId, comment: { _id, text, name, avatar, user, date }, deleteCommentFromPost, currentUser }) => {
   return (
     <div className="post bg-white p-1 my-1">
       <div>
@@ -17,10 +17,13 @@ const CommentItem = ({ postId, comment: { _id, text, name, avatar, user, date },
           Posted on <Moment format="YYYY/MM/DD">{date}</Moment>
         </p>
         {currentUser && currentUser._id === user && (
-          <button onClick={() => deleteComment(postId, _id)} type="button" className="btn btn-danger">
+          <button onClick={() => deleteCommentFromPost(postId, _id)} type="button" className="btn btn-danger">
             <i className="fas fa-times" />
           </button>
         )}
+        <button onClick={() => deleteCommentFromPost(postId, _id)} type="button" className="btn btn-danger">
+          <i className="fas fa-times" />
+        </button>
       </div>
     </div>
   )

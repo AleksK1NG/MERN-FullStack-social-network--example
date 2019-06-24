@@ -185,7 +185,7 @@ class ApiService {
   }
 
   deleteCommentFromPost(postId, commentId) {
-    return axiosInstance.post(`${POSTS_URL}/comment/${postId}/${commentId}`)
+    return axiosInstance.delete(`${POSTS_URL}/comment/${postId}/${commentId}`)
   }
 }
 
