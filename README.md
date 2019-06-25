@@ -5,7 +5,17 @@
 # React Node.js FullStack Example
 
 
+```bash
+# Install server 
+npm install
 
+# Install client 
+cd client
+npm install
+
+# Run both Express & React from root
+npm run dev
+```
 
 
 
